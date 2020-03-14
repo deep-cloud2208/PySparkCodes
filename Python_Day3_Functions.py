@@ -112,6 +112,29 @@
 # print(MultiArgFunc(myDict,myArray))
 
 #-------------------------------------------------------------------------------
+# Call by Value & Call by Reference
+#-------------------------------------------------------------------------------
+# 1) Call by value is passing normal variables
+# 2) Call by Reference is passing List/Array. As the variable only contains
+#    pointer to the Array, changes to the items inside function does not impact
+#    does not impact it outside
+#-------------------------------------------------------------------------------
+# a = [10,20,30]
+# a = {10,20,30}
+# a = (10,20,30)
+# a = 10
+# def chageit(b):
+#     print("b: ", b)
+    # b = 20
+    # b[1] = 100
+    # b[2] = 1000
+    # print("b: ", b)
+
+# print("a: ", a)
+# chageit(a)
+# print("a: ", a)
+
+#-------------------------------------------------------------------------------
 # Args and Kwargs - pass as many arguments as you want
 #-------------------------------------------------------------------------------
 # def ArgKwargFunc(*args, **kwargs):
