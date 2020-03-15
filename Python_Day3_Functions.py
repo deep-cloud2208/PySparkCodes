@@ -16,10 +16,26 @@
 #
 # myFunc()
 
+# import sys
+
 # def myFunc(a,b): # a=20, b=30
 #     c = a+b
-#     # return (c)
-#     return (a*b)
+    # return (c)
+    # return (a*b)
+
+# TechStack = ["Spark", "Hive", "Sqoop"]
+
+# topic = sys.argv[1] # Receive command line argument
+# topic=str(topic).lower()
+#
+# print("printing the command line argument that was passed: ", topic)
+#
+# if topic == "spark":
+#     x = myFunc(10,20)
+#     print(x)
+# else:
+#     print("Please learn spark")
+
 
 # print("hi there")
 # var1 = myFunc(20,30) # var1 would have the value after "return" statement, which is value of c

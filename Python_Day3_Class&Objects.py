@@ -112,7 +112,19 @@
 # Python Modules
 # SYS.PATH
 #-------------------------------------------------------------------------------
+# import sys
+# from Python_Day3_Functions import myFunc, TechStack
+# # import Python_Day3_Functions
+#
+# sys.path.append('/your/program/path')
 
+# Environment Variable PYTHONPATH
+
+# print(sys.path)
+
+# x = myFunc(20,70)
+# y = TechStack
+# print(x,y)
 
 
 
