@@ -58,12 +58,12 @@
 #-------------------------------------------------------------------------------
 # Lambda Functions (Also called Anonymous Functions or Lambda Expressions)
 # Few traits:
-# - Cannot be used to define complex logic
-# - Mostly used in Data processing frameworks like Spark
-# - Cannot have multiple lines or else it will give error
-# - RETURN statement is not needed
+# - Cannot be used to define complex logic. Cannot have multiple lines or else
+#   it will give error.
+# - Mostly used in Data processing frameworks like Spark.
+# - RETURN statement is not needed.
 # - Following is the structure to define Lambda function
-#   lambda x,y,z: <expression>
+#   lambda x,y,z: <expression>.
 # - To call a Lambda function use the following syntax
 #   i) Define the function as a variable > f = lambda x: x+1
 #   ii) Call the variable with argument > f(3)
@@ -79,27 +79,39 @@
 # z = y(5)
 # print(z)
 
-# Quadratic equation - ax^2 + bx + c
+# Quadratic equation using Lambda - ax^2 + bx + c
+#-------------------------------------------------------------------------------
+# def quad(a,b,c,x):
+#     return a*x**2 + b*x + c
+#
+# y = quad(2,4,5,1)
+# print(y)
+
 # y = lambda a,b,c,x: a*x**2 + b*x + c
-# var = y(5,4,5,10)
+# var = y(2,4,5,1)
 # print(var)
 
 # find out the length of strings in the lastname
 # scientists = ["Isaac Newton", "Albert Einstein", "Abdul Kalam", "Jagdish Bose", "Stephen Hawking"]
-#
+
 # def get_last_name_len(name):
 #     lname = name.split(' ')[1].lower()
 #     lname_len = len(lname)
 #     return lname_len
-#
+
+# length_lambda = lambda x: x.split(' ')[1]
+
 # for i in scientists:
-#     # Write the same using Lambda functions here
-#     length= get_last_name_len(i)
-#     print("LName strings for {} is : {}".format(i,length))
+    # Write the same using Lambda functions here
+    # length= get_last_name_len(i)
+    # length = len(length_lambda(i))
+    # print("LName strings for {} is : {}".format(i,length))
 
 
-
-
+#-------------------------------------------------------------------------------
+# Python Modules
+# SYS.PATH
+#-------------------------------------------------------------------------------
 
 
 
