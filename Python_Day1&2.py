@@ -62,7 +62,7 @@
 
 
 # -------------------------------------------------------------------------------
-# Tuples () - NON MODIFIBALE (Immutable) ARRAY/LIST
+# Tuples () - NON MODIFIBALE (Immutable) ARRAY
 # -------------------------------------------------------------------------------
 
 # var_tuple_technology = ('aws', 'spark', 100, 200.5, 'gcp', 'hadoop','aws','aws')
@@ -82,12 +82,11 @@
 # -------------------------------------------------------------------------------
 # Lists [] - MODIFIBALE (Mutable) ARRAY/LIST
 # -------------------------------------------------------------------------------
-
-# var_list_technology = ['aws','spark',100,'hadoop','yarn']
-
 # var_list_technology = list() # Create empty list
-
-# var_list_technology[2] = 'spark' # Not allowed
+#
+# var_list_technology = ['aws','spark',100,'hadoop','yarn', 'spark']
+#
+# var_list_technology[2] = 'gcp'
 
 # var_list_technology.append('aws')
 # var_list_technology.append('gcp')
@@ -96,6 +95,11 @@
 # var_list_technology.append('hadoop')
 #
 # var_list_technology.insert(3,'Big Data')
+# var_list_technology.append('Dataproc')
+
+# print(var_list_technology)
+# var = var_list_technology.pop()
+# print(var)
 #
 #
 # print(len(var_list_technology))
@@ -135,7 +139,11 @@
 #         "Technologies" : ['aws','spark','hadoop'],
 #         "Salary" : 100000
 #     }
-
+#
+# var_dict_employee['Posting'] = "Bangalore"
+# var_dict_employee['Address']['phone'].append(123)
+# print(var_dict_employee)
+# print(var_dict_employee['Address']['phone'][1])
 
 # print(type(address))
 # print(var_dict_employee['Technologies'][2])
@@ -166,17 +174,20 @@
 # var_set_technology1 = {'aws', 'spark', 'hadoop', 'gcp'}
 # var_set_technology2 = {'aws', 'spark', 'oracle', 'db2', 'mysql', 'mongodb'}
 # var_set_technology3 = {'aws', 'spark', 'oracle', 'db2', 'mysql', 'mongodb', 'redis'}
+# var_set_technology4 = {'spark','dataproc','emr','bigtable','apache beam'}
 
 # var_set_technology = var_set_technology3.difference(var_set_technology2)
 
 # var_set_technology = var_set_technology1.intersection(var_set_technology2)
 
-# var_set_technology.add('gcp')
+# var_set_technology = var_set_technology1.union(var_set_technology4)
+
+# var_set_technology.add('flume')
 # var_set_technology.add('spark')
 # var_set_technology.remove('aws')
 # var_set_technology2.pop()
 
-# print(var_set_technology)
+# print(var_set_technology.)
 
 
 # -------------------------------------------------------------------------------
@@ -254,13 +265,13 @@
 # From List to String
 # my_list = ['my', 'name', 'is', 'deep']
 # print(type(my_list))
-# my_str = ' '.join(my_list)
+# my_str = '-'.join(my_list)
 # print(type(my_str))
 # print(my_str)
 
 # From String to List
 
-# my_new_list = my_str.split(' ')
+# my_new_list = my_str.split('-')
 # print(my_new_list)
 
 # -------------------------------------------------------------------------------
