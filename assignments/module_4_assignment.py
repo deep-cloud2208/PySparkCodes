@@ -1,12 +1,12 @@
-from pyspark import SparkContext, SparkConf
-
-conf = SparkConf().setMaster('local').setAppName('Module4_assignment')
-sc = SparkContext(conf=conf)
+# from pyspark import SparkContext, SparkConf
+#
+# conf = SparkConf().setMaster('local').setAppName('Module4_assignment')
+# sc = SparkContext(conf=conf)
 
 # -------------------
 # 1. Load the dataset
 # -------------------
-rdd1 = sc.textFile("file:////Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/assignments/Mod4_AB_NYC_2019.csv")
+# rdd1 = sc.textFile("file:////Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/assignments/Mod4_AB_NYC_2019.csv")
 
 # --------------------------
 # 2. Print the first 10 rows

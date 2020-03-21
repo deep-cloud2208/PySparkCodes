@@ -58,3 +58,31 @@ sc = SparkContext(conf=conf)
 #
 # for i in rdd3.collect():
 #     print(i)
+
+
+#-----------------------------------------------------------------------------------------------
+# RDD "union/intersection" transformation
+# UNION Merges two RDDs - does not matter whether the RDDs have same data or not. But a better use
+# case would be to merge two RDDs with same data structure or schema. UNION WILL NOT REMOVE
+# DUPLICATE VALUES.
+# Intersection fetches common values from 2 RDDs. It will also remove duplicates whilst doing
+# the intersection.
+#-----------------------------------------------------------------------------------------------
+
+# rdd1 = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/stream-data.csv")
+# rdd2 = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/stream-data2.csv")
+
+# union_rdd = rdd1.union(rdd2)
+# print(union_rdd.count())
+
+# intersection_rdd = rdd1.intersection(rdd2)
+
+# for i in union_rdd.collect():
+# for i in intersection_rdd.collect():
+#     print(i)
+
+#-----------------------------------------------------------------------------------------------
+# RDD "sortBy" transformation
+# Used to sort the entire RDD based on ONE key. We can specify the key ourselves
+#-----------------------------------------------------------------------------------------------
+
