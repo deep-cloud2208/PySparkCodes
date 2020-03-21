@@ -81,8 +81,27 @@ sc = SparkContext(conf=conf)
 # for i in intersection_rdd.collect():
 #     print(i)
 
+
 #-----------------------------------------------------------------------------------------------
 # RDD "sortBy" transformation
 # Used to sort the entire RDD based on ONE key. We can specify the key ourselves
 #-----------------------------------------------------------------------------------------------
-
+# rdd = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/2015-12-12.csv")
+#
+# def convertToInteger(record):
+#     record = record.split(',')
+#     date = record[0]
+#     time = record[1]
+#     size = record[2]
+#
+#     try:
+#         size = int(size)
+#         return record
+#     except ValueError:
+#         pass
+#
+# rdd1 = rdd.filter(lambda x: convertToInteger(x))
+# rdd2 = rdd1.sortBy(lambda x: x.split(',')[2],ascending=False)
+#
+# for i in rdd2.take(20):
+#     print(i)
