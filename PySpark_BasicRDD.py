@@ -1,7 +1,7 @@
 from pyspark import SparkContext, SparkConf
 import json
 
-conf = SparkConf().setAppName('intellipaat_rdd').setMaster('local')
+conf = SparkConf().setAppName('intellipaat_rdd').setMaster('local[4]')
 sc = SparkContext(conf=conf)
 
 #-----------------------------------------------------------------------------------------------
