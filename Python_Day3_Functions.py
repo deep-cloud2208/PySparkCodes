@@ -227,3 +227,18 @@
 # print("'x' after coming from ScopeFunc (NOTICE THE VALUE, it did not change): ", x)
 # print("'y' after coming from ScopeFunc (NOTICE THE VALUE, it was changed in ScopeFunc): ", y)
 # print('  ')
+
+
+#-------------------------------------------------------------------------------
+# Lambda Functions (Also called Anonymous Functions or Lambda Expressions)
+# Few traits:
+# - Cannot be used to define complex logic. Cannot have multiple lines or else
+#   it will give error.
+# - Mostly used in Data processing frameworks like Spark.
+# - RETURN statement is not needed.
+# - Following is the structure to define Lambda function
+#   lambda x,y,z: <expression>.
+# - To call a Lambda function use the following syntax
+#   i) Define the function as a variable > f = lambda x: x+1
+#   ii) Call the variable with argument > f(3)
+#-------------------------------------------------------------------------------
