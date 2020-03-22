@@ -90,8 +90,6 @@ sc = SparkContext(conf=conf)
 #
 # def convertToInteger(record):
 #     record = record.split(',')
-#     date = record[0]
-#     time = record[1]
 #     size = record[2]
 #
 #     try:
