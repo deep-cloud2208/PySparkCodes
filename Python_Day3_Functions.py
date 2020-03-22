@@ -20,8 +20,11 @@
 
 # def myFunc(a,b): # a=20, b=30
 #     c = a+b
-    # return (c)
-    # return (a*b)
+#     # return c
+#     return (a*b)
+#
+# x = myFunc(10,100)
+# print(x)
 
 # TechStack = ["Spark", "Hive", "Sqoop"]
 
@@ -50,7 +53,7 @@
 #     funcVar = array.pop()
 #     return funcVar
 
-# a = list()
+a = list()
 # a.append('Spark')
 # a.append('Python')
 # a.append('PySpark')
@@ -58,9 +61,13 @@
 # a.append('MapReduce')
 
 # a = [ 'Spark', 'Python', 'PySpark', 'HDFS', 'MapReduce']
+#
+# b=ArrayFunc(a)
+# print(b)
 
 # a = tuple()
 # a = ('Spark', 'Python', 'PySpark')
+# ArrayFunc(a)
 
 # a = set()
 # a = {'Spark', 'Python', 'PySpark', 'Spark', 'Python', 'PySpark'}
@@ -71,7 +78,7 @@
 # print("a (outside of ArrayFunc): ", a)
 # var1 = ArrayFunc(a)
 # print("var1 (after coming from ArrayFunc): ",var1)
-#
+
 
 # def func_to_return_multiple_values(array):
     # var1 = array[0]
@@ -86,8 +93,10 @@
 # var = {1,2,3,4}
 # var_out = func_to_return_multiple_values(var)
 # print("Getting multiple values in 'return' statement: ", var_out)
-# var_out1 = func_to_return_multiple_values(var)[0]
-# var_out1 = func_to_return_multiple_values(var)[1]
+# var_out1 = func_to_return_multiple_values(var)
+# var_out2 = func_to_return_multiple_values(var)[1]
+# print(var_out1)
+# print(var_out2)
 
 #-------------------------------------------------------------------------------
 # Pass Dictionary as argument
@@ -110,9 +119,9 @@
 #         'Programming2': 'Java'
 #     }
 # var['bussiness_use_case'] = 'Data Warehouse and Analytics'
-
+#
 # print("var (before passing to DictFunc): ",var)
-
+#
 # var_out1=DictFunc(var)
 # print(var_out1)
 
@@ -136,9 +145,34 @@
 #
 # myArray = list()
 # myArray = ['Maths', 'Chemistry', 'Physics', 'Biology']
-
+#
 # MultiArgFunc(myDict,myArray)
 # print(MultiArgFunc(myDict,myArray))
+
+#-------------------------------------------------------------------------------
+# Args and Kwargs - pass as many arguments as you want
+#-------------------------------------------------------------------------------
+# def ArgKwargFunc(*args, **kwargs):
+# def ArgKwargFunc(arg1,*args, **kwargs):
+#     print("arg1: ", arg1)
+#     print("args: ", args)
+#     print("kwargs: ", kwargs)
+#
+# mylist = ['a','b']
+# myset = {'set1', 'set2'}
+# mytuple = (1,2)
+# mydict1 = {"FName" : "Soumyadeep", "LName" : "Dey", "Exp": 16}
+# mydict2 = {"Tech": ['aws', 'gcp', 'big data']}
+
+# mylist = "mylist"
+# myset = "myset"
+# mytuple = 100
+
+
+# ArgKwargFunc(mylist,myset,mytuple,mydict1,mydict2,name="Deep",tech="Spark",exp=16,cloud=True)
+# ArgKwargFunc(mylist,myset,mytuple)
+# ArgKwargFunc(name="Intellipaat",subject="PySpark")
+# ArgKwargFunc(mylist,myset,mytuple,Name="Intellipaat", Type="Training Institute")
 
 #-------------------------------------------------------------------------------
 # Call by Value & Call by Reference
@@ -152,6 +186,7 @@
 # a = {10,20,30}
 # a = (10,20,30)
 # a2 = 10
+#
 # def func_call_by_value(b):
 #     print("b (before assignment): ", b)
 #     b = 20
@@ -163,36 +198,12 @@
 #     b[2] = 1000
 #     print("b (after assignment): ", b)
 #
-#
+
 # func_call_by_value(a2)
 # print("a2 (after returning from func - call by value): ", a2)
 #
 # func_call_by_reference(a1)
 # print("a1 (after returning from func - call by reference): ", a1)
-
-#-------------------------------------------------------------------------------
-# Args and Kwargs - pass as many arguments as you want
-#-------------------------------------------------------------------------------
-# def ArgKwargFunc(*args, **kwargs):
-# def ArgKwargFunc(arg1,*args, **kwargs):
-#     print("arg1: ", arg1)
-#     print("args: ", args)
-#     print("kwargs: ", kwargs)
-
-# mylist = ['a','b']
-# myset = {'set1', 'set2'}
-# mytuple = (1,2)
-# mydict1 = {"FName" : "Soumyadeep", "LName" : "Dey", "Exp": 16}
-# mydict2 = {"Tech": ['aws', 'gcp', 'big data']}
-
-# mylist = "mylist"
-# myset = "myset"
-# mytuple = 100
-
-# ArgKwargFunc(mylist,myset,mytuple,mydict1,mydict2,name="Deep",tech="Spark",exp=16,cloud=True)
-# ArgKwargFunc(mylist,myset,mytuple)
-# ArgKwargFunc(name="Intellipaat",subject="PySpark")
-# ArgKwargFunc(mylist,myset,mytuple,Name="Intellipaat", Type="Training Institute")
 
 # -------------------------------------------------------------------------------
 # Variable scope - Local and Global
@@ -217,7 +228,7 @@
 #     print(x)
 
 # x = 'DeepSpark'
-#
+
 # print("'x' before passing to ScopeFunc: ", x)
 # print("'y' before passing to ScopeFunc: ", y)
 # print('  ')
@@ -232,13 +243,25 @@
 #-------------------------------------------------------------------------------
 # Lambda Functions (Also called Anonymous Functions or Lambda Expressions)
 # Few traits:
-# - Cannot be used to define complex logic. Cannot have multiple lines or else
-#   it will give error.
+# - Cannot be used to define complex logic. Cannot have multiple lines or else it will give error.
 # - Mostly used in Data processing frameworks like Spark.
 # - RETURN statement is not needed.
 # - Following is the structure to define Lambda function
-#   lambda x,y,z: <expression>.
+#   lambda x,y,z: <return expression>.
 # - To call a Lambda function use the following syntax
 #   i) Define the function as a variable > f = lambda x: x+1
 #   ii) Call the variable with argument > f(3)
 #-------------------------------------------------------------------------------
+# def addition(var1,var2):
+#     a = var1.split(' ')
+#     b = var2
+#     return a,b
+#
+# a1 = "my name is corona virus i will kill everyone"
+# a2 = 100
+# # c = addition(a1,a2)
+# # print(c)
+# b = lambda x,y: (x.split(' '),y)
+# d = b(a1,a2)
+# print(d)
+
