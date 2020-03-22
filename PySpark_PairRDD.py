@@ -25,6 +25,7 @@ pairRDD = BasicRDD.keyBy(lambda x: x.split(',')[1])
 
 # print(pairRDD.keys().collect())       # Extract keys
 # print(pairRDD.values().collect())     # Extract values
+# print(pairRDD.lookup('"20140114"'))
 
 #-----------------------------------------------------------------------------------------------
 # PairRDD "mapValues" transformation
@@ -33,5 +34,10 @@ pairRDD = BasicRDD.keyBy(lambda x: x.split(',')[1])
 #-----------------------------------------------------------------------------------------------
 mapvaluesRDD = pairRDD.mapValues(lambda x: (x.split(',')[2], x.split(',')[4]))
 
-for i in mapvaluesRDD.take(5):
-    print(i)
+# for i in mapvaluesRDD.take(5):
+#     print(i)
+
+
+#-----------------------------------------------------------------------------------------------
+# Aggregation transformations
+#-----------------------------------------------------------------------------------------------
