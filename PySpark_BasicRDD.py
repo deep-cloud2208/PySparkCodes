@@ -105,5 +105,49 @@ sc = SparkContext(conf=conf)
 #     print(i)
 
 #-----------------------------------------------------------------------------------------------
-# RDD "reduce" transformation
+# RDD "groupBy" transformation
+# Similar to sortBy. We will have to pass the key based on which we want to group the
+# elements of the RDD.
 #-----------------------------------------------------------------------------------------------
+# rdd = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv")
+#
+# print(rdd.getNumPartitions())
+# rdd2 = rdd.groupBy(lambda x: x.split(',')[0])
+# # rdd3 = rdd2.map(lambda x: (x[0], list(x[1])))
+# # for i in rdd3.collect():
+# for i in rdd2.collect():
+#     print(i)
+
+#-----------------------------------------------------------------------------------------------
+# RDD "reduce" transformation
+#-----------------------------------------------------------------------------------------------z
+# carRDD = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information_copy.csv")
+#
+# from decimal import Decimal, InvalidOperation
+# def trim_price(record):
+#     price = record.split(',')[4]
+#     price = price.strip('$')
+#
+#     try:
+#         try:
+#             price = Decimal(price)
+#             return price
+#         except InvalidOperation:
+#             pass
+#
+#     except ValueError:
+#         pass
+#
+# def filter_none(record):
+#     if record is not None:
+#         return record
+#
+# rdd1 = carRDD.map(lambda x: trim_price(x))
+# rdd2 = rdd1.filter(lambda x: filter_none(x))
+# rdd_total = rdd2.reduce(lambda x,y: x+y)
+# rdd_max = rdd2.reduce(lambda x,y: max(x,y))
+# rdd_min = rdd2.reduce(lambda x,y: min(x,y))
+#
+# print("Total Sales: ",rdd_total)
+# print("Max Sales: ",rdd_max)
+# print("Min Sales: ",rdd_min)

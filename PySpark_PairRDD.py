@@ -9,8 +9,8 @@ sc = SparkContext.getOrCreate(conf=conf)
 #-----------------------------------------------------------------------------------------------
 # Convert a normal RDD to a key value pair RDD - using "map" transformation
 #-----------------------------------------------------------------------------------------------
-BasicRDD = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv')
-PairRDD = BasicRDD.map(lambda x: (x.split(',')[1],x))
+# BasicRDD = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv')
+# PairRDD = BasicRDD.map(lambda x: (x.split(',')[1],x))
 
 # for i in PairRDD.collect():
 #     print(i)
@@ -18,7 +18,7 @@ PairRDD = BasicRDD.map(lambda x: (x.split(',')[1],x))
 #-----------------------------------------------------------------------------------------------
 # Convert a normal RDD to a key value pair RDD - using "keyBy" transformation
 #-----------------------------------------------------------------------------------------------
-pairRDD = BasicRDD.keyBy(lambda x: x.split(',')[1])
+# pairRDD = BasicRDD.keyBy(lambda x: x.split(',')[1])
 
 # for i in PairRDD.take(5):
 #     print(i)
@@ -32,8 +32,7 @@ pairRDD = BasicRDD.keyBy(lambda x: x.split(',')[1])
 # mapValues operates on the value only (the second part of the tuple),
 # while map operates on the entire record (tuple of key and value).
 #-----------------------------------------------------------------------------------------------
-mapvaluesRDD = pairRDD.mapValues(lambda x: (x.split(',')[2], x.split(',')[4]))
-
+# mapvaluesRDD = pairRDD.mapValues(lambda x: (x.split(',')[2], x.split(',')[4]))
 # for i in mapvaluesRDD.take(5):
 #     print(i)
 
@@ -41,3 +40,7 @@ mapvaluesRDD = pairRDD.mapValues(lambda x: (x.split(',')[2], x.split(',')[4]))
 #-----------------------------------------------------------------------------------------------
 # Aggregation transformations
 #-----------------------------------------------------------------------------------------------
+carRDD = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information_copy.csv")
+
+
+
