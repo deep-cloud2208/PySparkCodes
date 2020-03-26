@@ -9,18 +9,20 @@ sc = SparkContext.getOrCreate(conf=conf)
 #-----------------------------------------------------------------------------------------------
 # Convert a normal RDD to a key value pair RDD - using "map" transformation
 #-----------------------------------------------------------------------------------------------
-# BasicRDD = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv')
+BasicRDD = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv')
 # PairRDD = BasicRDD.map(lambda x: (x.split(',')[1],x))
-
-# for i in PairRDD.collect():
+#
+# print('by map transformation...')
+# for i in PairRDD.take(5):
 #     print(i)
 
 #-----------------------------------------------------------------------------------------------
 # Convert a normal RDD to a key value pair RDD - using "keyBy" transformation
 #-----------------------------------------------------------------------------------------------
 # pairRDD = BasicRDD.keyBy(lambda x: x.split(',')[1])
-
-# for i in PairRDD.take(5):
+#
+# print('by keyBy transformation...')
+# for i in pairRDD.take(5):
 #     print(i)
 
 # print(pairRDD.keys().collect())       # Extract keys
@@ -40,7 +42,71 @@ sc = SparkContext.getOrCreate(conf=conf)
 #-----------------------------------------------------------------------------------------------
 # Aggregation transformations
 #-----------------------------------------------------------------------------------------------
-carRDD = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information_copy.csv")
+carRDD = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.csv")
+
+
+#?? QNS 1 >>> which product was sold the most
+#---------------------------------------------
+carPairRDD = carRDD.keyBy(lambda x: x.split(',')[3])
+salesByProduct = carPairRDD.groupByKey()
+salesByProductFinal = salesByProduct.map(lambda x: (x[0],len(list(x[1]))))
+sortedBySales = salesByProductFinal.sortBy(lambda x: x[1], ascending=False)
+
+# for i in sortedBySales.take(10):
+#     print(i)
+# print('###############################')
+
+carProductNames = carRDD.map(lambda x: x.split(',')[3])
+productCounts = carProductNames.map(lambda x: (x,1))
+topProducts = productCounts.reduceByKey(lambda x,y : (x+y))
+sortedProducts = topProducts.sortBy(lambda x: x[1], ascending=False) # what if you use sortByKey
+
+for i in sortedProducts.take(10):
+    print(i)
+
+#?? QNS 2 >>> Which product was sold the most by Quantity
+# -------------------------------------------------------
+
+
+#?? QNS 3 >>> Who are the product manufacturers
+# ---------------------------------------------
+
+
+#?? QNS 4 >>> Which model was sold in which country the most
+# ----------------------------------------------------------
+
+
+#?? QNS 5 >>> Statewise sale figure in each country
+# -------------------------------------------------
+
+
+#?? QNS 6 >>> Genderwise distribution of Product Manufacturers
+#-------------------------------------------------------------
 
 
 
+#?? QNS 7 >>> Details of Car make, Product Name and Total Quantity of the oldest car
+#---------------------------------------------------------------------------------
+
+
+
+#?? QNS 8 >>> Distribution of colors across Product Names
+#------------------------------------------------------
+
+
+#?? QNS 9 >>> Find coutries and their currencies where cars are sold
+#-------------------------------------------------------------------
+
+
+
+#?? QNS 10 >>> Which credit has been used the most
+#-------------------------------------------------
+
+
+
+#?? QNS 11 >>> Country, State and Region wise sale figure
+#--------------------------------------------------------
+
+
+#?? QNS 12 >>> Total sales person in the company
+#-----------------------------------------------

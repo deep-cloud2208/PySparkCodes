@@ -1,0 +1,18 @@
+1. product_id
+2. sales_person_id
+3. sales_person_name
+4. product_name
+5. price
+6. quantity_sold
+7. product_make
+8. product_color
+9. model_year
+10. region_sold_in
+11. state_sold_in
+12. country_sold_in
+13. buyer_gender
+14. currency
+15. credit_card_type
+16. Car_VIN
+
+

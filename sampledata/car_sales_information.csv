@@ -999,7 +999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,731534574-4,blebelrp,Continental,$886409.11,100682,Bentley,Blue,2012,Boston,Massachusetts,United States,Female,Dollar,americanexpress,JN8AS5MTXDW047673
 999,178175872-7,dlangstonrq,V50,$655020.24,136083,Volvo,Crimson,2007,Houston,Texas,United States,Female,Dollar,visa-electron,3GYFNDEY8AS532361
 1000,261959066-3,pskedgerr,2500,$80201.60,28080,GMC,Mauv,1993,Honolulu,Hawaii,United States,Female,Dollar,maestro,JTJBC1BA3B2439239
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,714489286-X,bcurror0,Fox,$349773.20,22779,Volkswagen,Pink,1991,Denver,Colorado,United States,Male,Dollar,jcb,1G6DA8E50C0133138
 2,333759126-4,cstarmont1,3 Series,$477832.10,80400,BMW,Purple,2003,Charlotte,North Carolina,United States,Male,Dollar,bankcard,3N1AB7AP7FL199131
 3,451581883-X,cnewcombe2,GTO,$564524.44,5600,Mitsubishi,Puce,1996,Los Angeles,California,United States,Male,Dollar,jcb,3VWPG3AGXAM947291
@@ -2000,7 +1999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,205730889-8,itaffierp,Avalanche,$456983.64,125057,Chevrolet,Orange,2006,Montgomery,Alabama,United States,Female,Dollar,mastercard,JTJHY7AX4B4587571
 999,002701719-2,bharsniperq,Grand Marquis,$674958.76,5360,Mercury,Teal,1989,El Paso,Texas,United States,Male,Dollar,visa-electron,5GALVCED8AJ987553
 1000,183858099-9,acleefrr,Crown Victoria,$746164.46,56738,Ford,Blue,1998,North Las Vegas,Nevada,United States,Male,Dollar,switch,1G6DK67V780187607
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,512126396-1,jgirtin0,300M,$885226.84,42908,Chrysler,Indigo,2002,Austin,Texas,United States,Male,Dollar,jcb,WBADS43451G532884
 2,735240002-8,lcoomes1,S-Series,$352363.59,23959,Saturn,Blue,1999,Tucson,Arizona,United States,Female,Dollar,jcb,1N4AL3AP3EC215778
 3,590387412-6,rjouannisson2,Corvette,$936860.00,93685,Chevrolet,Teal,1972,Conroe,Texas,United States,Female,Dollar,mastercard,5N1AA0ND9FN575203
@@ -3001,7 +2999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,771285779-2,trosiellorp,Baja,$135694.54,93043,Subaru,Teal,2004,Houston,Texas,United States,Female,Dollar,jcb,WAUKD98P17A365890
 999,975199226-5,sguerrierorq,Tahoe,$163593.22,70426,Chevrolet,Indigo,2000,Youngstown,Ohio,United States,Female,Dollar,mastercard,5FPYK1F60EB655256
 1000,786412056-3,jmcgeneayrr,SLK-Class,$271197.54,10454,Mercedes-Benz,Puce,2011,Southfield,Michigan,United States,Male,Dollar,china-unionpay,19UYA42463A169611
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,124157474-X,cmcveighty0,Ram Wagon B350,$156275.54,43531,Dodge,Red,1992,Kansas City,Missouri,United States,Male,Dollar,jcb,WBA3D3C55EK266438
 2,223714342-0,mlindenblatt1,RX,$593619.70,86324,Lexus,Turquoise,1999,Schenectady,New York,United States,Male,Dollar,diners-club-carte-blanche,1J4PR4GK7AC937666
 3,522523289-2,amcvicar2,NX,$143980.11,100597,Nissan,Red,1993,Spring Hill,Florida,United States,Male,Dollar,jcb,3VW217AU9FM464228
@@ -4002,7 +3999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,215318573-4,ppuzeyrp,Prizm,$805361.47,88152,Chevrolet,Purple,1999,Knoxville,Tennessee,United States,Male,Dollar,americanexpress,WAULT68E12A397283
 999,510597480-8,gfarresrq,9-2X,$417781.88,146457,Saab,Blue,2006,Little Rock,Arkansas,United States,Male,Dollar,laser,WBA5M2C51ED638560
 1000,659393364-3,jjouanotrr,Rabbit,$172541.82,73077,Volkswagen,Turquoise,2007,Port Charlotte,Florida,United States,Female,Dollar,visa-electron,5J6TF1H39DL338009
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,569626583-9,cceaser0,Maxima,$137172.48,96809,Nissan,Mauv,2000,Pinellas Park,Florida,United States,Male,Dollar,jcb,WA1EY74L67D256250
 2,662306466-4,aold1,X-Type,$453064.36,143140,Jaguar,Khaki,2002,Charlotte,North Carolina,United States,Male,Dollar,maestro,1G6AG1RX2F0220757
 3,804334059-5,csheeres2,Traverse,$70913.42,99675,Chevrolet,Teal,2009,El Paso,Texas,United States,Female,Dollar,jcb,4USBU33557L203684
@@ -5003,7 +4999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,177663458-6,miacovidesrp,626,$267289.98,110944,Mazda,Khaki,1987,Green Bay,Wisconsin,United States,Female,Dollar,jcb,WAUVC68E93A402899
 999,932810016-X,mlaffertyrq,S40,$459213.59,73302,Volvo,Orange,2001,Jacksonville,Florida,United States,Female,Dollar,switch,2HNYD18764H911038
 1000,695875599-5,aleyntonrr,S4,$430522.66,76931,Audi,Indigo,2007,Helena,Montana,United States,Female,Dollar,jcb,JHMFA3F2XAS796438
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,312651620-3,mcaselick0,745,$774999.49,65002,BMW,Turquoise,2002,Oklahoma City,Oklahoma,United States,Male,Dollar,instapayment,3D73M3CLXBG564624
 2,330490451-4,jcastilla1,Cooper Countryman,$694122.02,130934,MINI,Puce,2012,Silver Spring,Maryland,United States,Female,Dollar,jcb,JTHHP5BC9F5485901
 3,665747018-5,dmulleary2,Grand Prix,$990350.94,54925,Pontiac,Violet,1995,Columbia,South Carolina,United States,Female,Dollar,jcb,WAUAFAFC6CN661031
@@ -6004,7 +5999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,574485218-2,skeizmanrp,S6,$930052.96,93648,Audi,Crimson,2003,Sacramento,California,United States,Female,Dollar,bankcard,2C3CCAAG2EH717853
 999,665749367-3,iprielrq,Taurus,$472766.36,125951,Ford,Fuscia,2001,Mobile,Alabama,United States,Male,Dollar,laser,WAUDF98E17A396428
 1000,716895854-2,dowbrickrr,Routan,$686771.62,126174,Volkswagen,Orange,2009,Houston,Texas,United States,Female,Dollar,laser,3GYFNKE66BS647951
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,174975303-0,atrumpeter0,Blazer,$782191.33,88103,Chevrolet,Mauv,1996,Phoenix,Arizona,United States,Male,Dollar,laser,1YVHZ8BH5D5177012
 2,815405323-3,dkier1,Sonoma,$494245.23,126365,GMC,Goldenrod,1995,Washington,District of Columbia,United States,Female,Dollar,jcb,1D7RB1CT0AS945426
 3,237248948-8,gtesmond2,Scoupe,$86221.47,130039,Hyundai,Violet,1993,New York City,New York,United States,Male,Dollar,jcb,SCFAD01A18G568584
@@ -7005,7 +6999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,057377073-5,kdymockrp,Continental,$292556.29,103370,Lincoln,Violet,1996,Des Moines,Iowa,United States,Male,Dollar,china-unionpay,JN1CV6EK2AM631406
 999,807339941-5,jcaldicotrq,Accent,$811114.43,49386,Hyundai,Fuscia,2002,Port Washington,New York,United States,Female,Dollar,jcb,5UXFE4C50AL580455
 1000,482623039-7,niresonrr,Exige,$783656.87,120977,Lotus,Teal,2005,Nashville,Tennessee,United States,Male,Dollar,jcb,1FTEW1E89AF213968
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,726430606-2,scoghlan0,XC90,$961487.44,95344,Volvo,Crimson,2004,Chicago,Illinois,United States,Male,Dollar,diners-club-enroute,1FTEW1CF7FK311056
 2,015505512-7,sjersh1,Taurus,$57976.02,68478,Ford,Violet,1986,Naples,Florida,United States,Male,Dollar,diners-club-us-ca,5UXFE43527L617854
 3,008074405-2,qgeorgeon2,3000GT,$945683.81,63329,Mitsubishi,Purple,1995,Las Vegas,Nevada,United States,Male,Dollar,bankcard,JN1AZ4EH2BM389741
@@ -8006,7 +7999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,380976220-2,lpierrirp,Vanquish S,$116425.72,31784,Aston Martin,Green,2005,Waltham,Massachusetts,United States,Male,Dollar,jcb,WBA3N7C50EK105029
 999,307251363-5,fbehningrq,CX-7,$817963.25,99717,Mazda,Goldenrod,2011,Washington,District of Columbia,United States,Female,Dollar,jcb,WAUDF78E78A218268
 1000,854544660-8,lscrinerr,Lynx,$950806.91,104759,Mercury,Blue,1987,Buffalo,New York,United States,Male,Dollar,mastercard,WAUVT68E63A983844
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,567906918-0,fburnhill0,M5,$737095.00,24276,BMW,Aquamarine,2008,Alpharetta,Georgia,United States,Female,Dollar,visa-electron,1YVHZ8BA9A5678578
 2,852255261-4,jmcclosh1,Sierra 3500,$952025.23,134033,GMC,Khaki,2011,El Paso,Texas,United States,Male,Dollar,jcb,3N1AB6AP4AL024435
 3,348387017-2,smounch2,Type 2,$871718.91,24078,Volkswagen,Teal,1990,Huntington,West Virginia,United States,Female,Dollar,jcb,WAUFEAFM6DA709380
@@ -9007,7 +8999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,537334404-4,rlinckrp,Tracer,$15755.33,2004,Mercury,Pink,1999,New York City,New York,United States,Female,Dollar,mastercard,1G4HF57918U452882
 999,831307680-1,kvankovrq,Grand Prix,$666770.32,72045,Pontiac,Teal,2008,El Paso,Texas,United States,Female,Dollar,jcb,2G4GS5EV8D9533926
 1000,156909573-6,cdamprr,Topaz,$900580.74,49826,Mercury,Violet,1991,Chicago,Illinois,United States,Male,Dollar,jcb,WDDEJ7EB6CA368368
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,097204739-5,abusson0,Escalade EXT,$960596.07,19931,Cadillac,Violet,2011,Green Bay,Wisconsin,United States,Female,Dollar,visa,WBA3C3G55FN082257
 2,519507221-3,elavers1,S10,$94972.39,82037,Chevrolet,Pink,2003,Denver,Colorado,United States,Female,Dollar,jcb,3GYFNFEY5BS387485
 3,551996599-4,mcarmont2,F-Series,$72502.96,11105,Ford,Maroon,1985,Baltimore,Maryland,United States,Male,Dollar,jcb,WBAEV53414K179143
@@ -10008,7 +9999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,675269964-X,rcussenrp,Outlook,$61005.28,60394,Saturn,Goldenrod,2010,Boise,Idaho,United States,Male,Dollar,jcb,19UUA75648A991859
 999,197779912-4,fyakushkevrq,Maxima,$683418.11,121665,Nissan,Blue,2008,Tulsa,Oklahoma,United States,Female,Dollar,solo,WUAUUAFG6F7567591
 1000,001525537-9,ccheelrr,Galant,$180742.68,60371,Mitsubishi,Red,1985,Corona,California,United States,Female,Dollar,laser,WAUEV94F78N082864
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,637492094-5,amcgeown0,Camry,$638564.70,52229,Toyota,Green,2004,Burbank,California,United States,Male,Dollar,switch,WBAUN7C52CV863129
 2,141814653-6,mmcneigh1,Continental Mark VII,$273550.04,30758,Lincoln,Maroon,1992,Palatine,Illinois,United States,Male,Dollar,jcb,1G6DM5E31D0698133
 3,345217276-7,jmarrow2,Escape,$413637.08,146908,Ford,Indigo,2005,Kansas City,Missouri,United States,Female,Dollar,jcb,JHMGE8G32DC496601
@@ -11009,7 +10999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,052102352-1,tdynerp,Blazer,$612825.30,14545,Chevrolet,Khaki,2000,Newport Beach,California,United States,Male,Dollar,maestro,WUARL48H96K736550
 999,321547971-0,alescoprq,DTS,$273787.82,116474,Cadillac,Turquoise,2006,Burbank,California,United States,Male,Dollar,jcb,JH4KA96531C868523
 1000,513290960-4,mpesakrr,Highlander,$875845.33,91627,Toyota,Violet,2011,Albuquerque,New Mexico,United States,Female,Dollar,diners-club-us-ca,5XYKT3A68FG623762
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,725992796-8,hbuzek0,G,$447858.54,61035,Infiniti,Mauv,2007,Greeley,Colorado,United States,Female,Dollar,jcb,5TDDK3DCXFS226943
 2,444423405-9,apipping1,100,$862892.36,114488,Audi,Blue,1989,Hartford,Connecticut,United States,Female,Dollar,maestro,5BZBF0AAXFN574289
 3,398272072-9,cmadrell2,Matrix,$746428.11,136422,Toyota,Pink,2012,Birmingham,Alabama,United States,Male,Dollar,jcb,JN1BJ0HR4DM697974
@@ -12010,7 +11999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,056257638-X,dverginerp,Montana,$46051.47,62351,Pontiac,Purple,2005,Spokane,Washington,United States,Female,Dollar,jcb,JTEBU5JR6C5956612
 999,039106757-5,mdelvesrq,Monte Carlo,$939187.65,145591,Chevrolet,Crimson,1999,Columbia,South Carolina,United States,Male,Dollar,jcb,WP0AA2A92DS069051
 1000,479851174-9,lbramfordrr,Corvette,$924661.44,124259,Chevrolet,Khaki,1989,Sacramento,California,United States,Female,Dollar,solo,KM8NU4CC5BU658153
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,192280799-0,atantrum0,Tracer,$60974.01,83952,Mercury,Pink,1995,San Jose,California,United States,Male,Dollar,jcb,JN8AF5MR3FT616814
 2,157434041-7,shyrons1,XJ,$236277.99,110810,Jaguar,Turquoise,2012,Sacramento,California,United States,Female,Dollar,jcb,1FTWX3B52AE465154
 3,575366792-9,hbatrick2,7 Series,$103609.99,19177,BMW,Green,2005,Houston,Texas,United States,Female,Dollar,jcb,1G6DS1ED5B0548126
@@ -13011,7 +12999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,470067803-8,memmarp,Enclave,$67766.00,57755,Buick,Purple,2011,Dallas,Texas,United States,Female,Dollar,jcb,WAUVC58E65A421438
 999,368031308-X,bbudgenrq,iQ,$281414.01,94448,Scion,Turquoise,2012,New York City,New York,United States,Female,Dollar,jcb,WDCYC3HF3AX698630
 1000,386271282-6,aarchanbaultrr,Blazer,$604342.16,108459,Chevrolet,Crimson,2001,Vancouver,Washington,United States,Male,Dollar,visa,1FTMF1CW3AK459290
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,068883513-9,ccawdell0,Galant,$589682.84,118456,Mitsubishi,Orange,1998,Seattle,Washington,United States,Male,Dollar,visa,1G6AL5S38E0745279
 2,264669619-1,hbotley1,Envoy,$236620.37,61935,GMC,Yellow,2004,Birmingham,Alabama,United States,Female,Dollar,china-unionpay,WVWAA7AH8AV668714
 3,028099369-2,fleyborne2,Aveo,$992402.27,38256,Chevrolet,Red,2006,Las Vegas,Nevada,United States,Female,Dollar,solo,SCBLC37F44C598715
@@ -14012,7 +13999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,096922830-9,arounsivallrp,Viper,$88471.15,81774,Dodge,Indigo,2002,Tampa,Florida,United States,Male,Dollar,diners-club-us-ca,3G5DB03E22S365429
 999,413768010-8,chellinrq,Ram 3500 Club,$326031.21,103139,Dodge,Yellow,1997,Baton Rouge,Louisiana,United States,Female,Dollar,mastercard,1GKS1GEJ0DR954124
 1000,363558600-5,hbenoeyrr,GS,$613012.68,50651,Lexus,Violet,2004,Beaverton,Oregon,United States,Female,Dollar,jcb,WAUBF48H77K258598
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,971450471-6,cbedinn0,Mighty Max,$903012.07,10111,Mitsubishi,Yellow,1994,Jackson,Tennessee,United States,Male,Dollar,switch,WDDJK7DA3FF387455
 2,609747384-2,bboullin1,Sentra,$42436.02,7243,Nissan,Mauv,1997,Reading,Pennsylvania,United States,Female,Dollar,americanexpress,WBAVT73517F251644
 3,517015412-7,sszimoni2,Fiero,$548785.49,115369,Pontiac,Teal,1988,Peoria,Arizona,United States,Male,Dollar,americanexpress,3C6TD5HTXCG055432
@@ -15013,7 +14999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,704096778-2,fcaslanerp,Sidekick,$44749.18,118234,Suzuki,Red,1996,Evansville,Indiana,United States,Male,Dollar,jcb,JTDKN3DUXA0297451
 999,745628913-1,tmeasenrq,200SX,$820866.95,69673,Nissan,Pink,1996,New York City,New York,United States,Female,Dollar,jcb,5N1AN0NU4BC073869
 1000,549870229-9,abrussellrr,CTS,$891103.43,81213,Cadillac,Aquamarine,2004,Daytona Beach,Florida,United States,Male,Dollar,solo,JTDJTUD37DD266699
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,254231101-3,ioxbe0,Bonneville,$169876.67,35803,Pontiac,Purple,1965,Portland,Oregon,United States,Male,Dollar,americanexpress,WAUAF48H48K623218
 2,948962738-0,tdjuricic1,Legend,$902769.68,41224,Acura,Pink,1990,Louisville,Kentucky,United States,Female,Dollar,maestro,WA1VMAFE8DD693539
 3,259608741-3,lgilhooley2,Camaro,$830663.21,23140,Chevrolet,Maroon,1997,Nashville,Tennessee,United States,Male,Dollar,diners-club-us-ca,3C3CFFDR0CT023216
@@ -16014,7 +15999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,736972213-9,agabbottsrp,3500,$872902.62,13988,Chevrolet,Crimson,2000,Houston,Texas,United States,Female,Dollar,jcb,1FTSW2A55AE914579
 999,496149709-6,eepdellrq,NSX,$82618.81,11268,Acura,Puce,2005,Lexington,Kentucky,United States,Male,Dollar,mastercard,WAUPL68E75A991785
 1000,544720207-8,dtapperrr,Miata MX-5,$600682.32,41390,Mazda,Fuscia,2006,Sioux Falls,South Dakota,United States,Female,Dollar,jcb,WP0AA2A98ES597713
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,181862027-8,dwrathmell0,Mariner,$119651.46,7055,Mercury,Violet,2010,Brooklyn,New York,United States,Female,Dollar,maestro,5NMSG3AB5AH014919
 2,850096355-7,enorth1,X5,$694163.19,46930,BMW,Blue,2013,Davenport,Iowa,United States,Male,Dollar,visa,2FMGK5BC5AB046882
 3,604567472-3,sthring2,FX,$712468.40,77589,Infiniti,Goldenrod,2011,Fredericksburg,Virginia,United States,Male,Dollar,visa-electron,1G4GD5GGXAF870609
@@ -17015,7 +16999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,438335303-7,lwhickmanrp,Savana 2500,$943159.66,116859,GMC,Blue,1997,North Hollywood,California,United States,Male,Dollar,jcb,JH4CU4F41BC638941
 999,675599893-1,kblindermannrq,LS,$691988.08,134445,Lexus,Mauv,2001,Kansas City,Missouri,United States,Male,Dollar,switch,3VW217AU2FM718488
 1000,581528617-6,esextonrr,Rio,$193705.02,76930,Kia,Teal,2013,Gainesville,Florida,United States,Female,Dollar,diners-club-enroute,JTHFE2C20D2550277
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,770080247-5,ghankey0,Rally Wagon 3500,$898067.48,8933,GMC,Crimson,1994,Washington,District of Columbia,United States,Male,Dollar,jcb,3C3CFFJH4ET504486
 2,929220246-4,imatic1,Acclaim,$236966.10,82231,Plymouth,Turquoise,1993,Santa Barbara,California,United States,Female,Dollar,jcb,YV140MEA2F1983965
 3,450721266-9,bromeuf2,Altima,$638123.22,135206,Nissan,Teal,1995,El Paso,Texas,United States,Male,Dollar,jcb,2C4RDGCG3DR675897
@@ -18016,7 +17999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,480174494-X,amuscottrp,XF,$589941.55,140080,Jaguar,Aquamarine,2012,Tulsa,Oklahoma,United States,Female,Dollar,jcb,3VWKZ7AJ4BM087574
 999,386064858-6,pchmielrq,i-370,$634359.19,92565,Isuzu,Khaki,2007,Vero Beach,Florida,United States,Female,Dollar,diners-club-us-ca,KMHFH4JG2FA339248
 1000,395609991-5,mgilliserr,Ram 2500,$647934.70,99191,Dodge,Fuscia,1994,Albuquerque,New Mexico,United States,Male,Dollar,americanexpress,3D73Y4CL8AG653794
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,753907788-3,nridoutt0,Explorer Sport Trac,$305880.24,56599,Ford,Crimson,2001,Rockville,Maryland,United States,Male,Dollar,instapayment,2HNYD18603H763894
 2,344319139-8,lmcilveen1,Mazda6,$632613.66,72302,Mazda,Aquamarine,2011,Huntsville,Alabama,United States,Male,Dollar,maestro,WAUJGBFC0DN486229
 3,948148154-9,fbawdon2,Cabriolet,$198371.53,31247,Audi,Goldenrod,1997,Evansville,Indiana,United States,Female,Dollar,maestro,WAUSG78E96A700032
@@ -19017,7 +18999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,987344278-2,ldeverickrp,FJ Cruiser,$33896.67,83111,Toyota,Mauv,2009,Meridian,Mississippi,United States,Male,Dollar,china-unionpay,WVWED7AJ8DW617966
 999,760585680-6,cspringfordrq,Quest,$696764.13,137632,Nissan,Maroon,1993,Tacoma,Washington,United States,Female,Dollar,jcb,5UXWX7C59DL538365
 1000,310185182-3,lkepperr,Metro,$709083.57,20596,Chevrolet,Yellow,2001,Tacoma,Washington,United States,Female,Dollar,china-unionpay,WA1YD54B22N767011
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,515090691-3,jkempston0,Magnum,$821598.09,66910,Dodge,Teal,2007,Fullerton,California,United States,Female,Dollar,maestro,1GYS4GEF0CR556578
 2,610463897-X,eboyen1,Cougar,$754028.58,111894,Mercury,Green,1994,New York City,New York,United States,Male,Dollar,jcb,WAUXL58E25A402829
 3,147955814-1,jmadden2,A6,$876051.00,91305,Audi,Aquamarine,1999,Baton Rouge,Louisiana,United States,Male,Dollar,jcb,WA1LKBFP8AA011261
@@ -20018,7 +19999,6 @@ product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,pr
 998,731337641-3,fabyssrp,Safari,$872345.74,17016,GMC,Mauv,2005,Cleveland,Ohio,United States,Male,Dollar,switch,SCFHDDAJ9AA300557
 999,405955178-3,dcharlestonrq,X3,$37997.15,140122,BMW,Violet,2004,Paterson,New Jersey,United States,Male,Dollar,mastercard,WA1WMBFE7DD477062
 1000,908138988-2,dgarbuttrr,Escape,$955571.13,21143,Ford,Indigo,2008,Birmingham,Alabama,United States,Male,Dollar,laser,error: SQLite3::CorruptException: database disk image is malformed
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,359145572-5,hplak0,Cabriolet,$517116.30,11490,Audi,Orange,1996,Augusta,Georgia,United States,Male,Dollar,jcb,1G4GD5ER1CF807504
 2,377239969-X,cbuttrey1,S-Class,$424843.26,67285,Mercedes-Benz,Violet,1993,Waterbury,Connecticut,United States,Female,Dollar,jcb,WAUSF78KX9N228235
 3,227037438-X,bpitblado2,Malibu,$327545.69,49580,Chevrolet,Maroon,2000,Washington,District of Columbia,United States,Female,Dollar,jcb,5UMCN93482L867838
