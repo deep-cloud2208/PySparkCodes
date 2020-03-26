@@ -40,9 +40,10 @@ BasicRDD = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/I
 
 
 #-----------------------------------------------------------------------------------------------
-# Aggregation transformations
+# Aggregation transformations - use Car Sales Data
 #-----------------------------------------------------------------------------------------------
-carRDD = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.csv")
+carRDD = \
+sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.csv")
 
 
 #?? QNS 1 >>> which product was sold the most
@@ -110,3 +111,39 @@ for i in sortedProducts.take(10):
 
 #?? QNS 12 >>> Total sales person in the company
 #-----------------------------------------------
+
+
+#?? QNS 13 >>> Given the sales person id, find his/her sale credentials
+#-----------------------------------------------------------------------
+
+
+
+
+#-----------------------------------------------------------------------------------------------
+# Aggregation transformations - use Plant Data
+#-----------------------------------------------------------------------------------------------
+plantRDD = \
+sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/plant_data.csv')
+
+#?? QNS 1 >>> which is the most occuring plant family
+#----------------------------------------------------
+
+
+#?? QNS 2 >>> Plant and Country wise distribution
+#------------------------------------------------
+
+
+#?? QNS 3 >>> Find location (state) of the most plant found in a country
+#-----------------------------------------------------------------------
+
+
+
+#?? QNS 4 >>> Find the occurance of plant name, plant family and scientific name combination
+#-------------------------------------------------------------------------------------------
+
+
+
+
+#-----------------------------------------------------------------------------------------------
+# Join transformations - use Emp and Dept Data files
+#-----------------------------------------------------------------------------------------------
