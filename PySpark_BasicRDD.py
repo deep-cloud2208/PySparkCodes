@@ -18,9 +18,9 @@ sc = SparkContext(conf=conf)
 #
 # rdd1 = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/restaurants.json")
 # rdd2 = rdd1.filter(lambda x: filter_with_zip(x))
-
-# Write the above in a single line lambda function
-
+#
+# # Write the above in a single line lambda function
+#
 # for i in rdd2.collect(): # "collect" is an RDD "action"
 #     var=json.loads(i)
 #     print(var['address']['zipcode'])
@@ -113,9 +113,9 @@ sc = SparkContext(conf=conf)
 #
 # print(rdd.getNumPartitions())
 # rdd2 = rdd.groupBy(lambda x: x.split(',')[0])
-# # rdd3 = rdd2.map(lambda x: (x[0], list(x[1])))
-# # for i in rdd3.collect():
-# for i in rdd2.collect():
+# rdd3 = rdd2.map(lambda x: (x[0], tuple(x[1])))
+# for i in rdd3.take(50):
+# # for i in rdd2.collect():
 #     print(i)
 
 #-----------------------------------------------------------------------------------------------
