@@ -29,6 +29,32 @@ BasicRDD = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/I
 # print(pairRDD.values().collect())     # Extract values
 # print(pairRDD.lookup('"20140114"'))
 
+##############################################################################################
+'''
+Pair RDD Transformations:-
+1. groupByKey() - Group based on a key: (K,V) -> (K, iterable <V>)
+2. reduceByKey(func) - Aggregate by key based on the func: (K,V) -> (K, V after applying func)
+3. sortByKey(ascending=True|False) - Sort on key basis: (K,V) -> (Sorted K,V)
+4. join(rdd) - Joins two RDDs based on key: (K,V)&(K,W) -> (K,(V,W)).
+   leftOuterJoin, rightOuterJoin, fullOuterJoin are also there.
+5. cogroup(rdd) - Groups two RDDs based on key: (K,V)&(K,W) -> (K,(iterable V, iterable W))
+6. cartesian(rdd) - cartesian product of two datasets -> (K1,V1)&(K2,V2) -> ((K,V),(K,V)) 
+7. coalesce - Decrease the no. of partitions.
+8. repartition - Modify the no. of partitions either by increasing or decreasing
+
+Actions:-
+reduce(), collect(), count(), countByKey(), take(), saveAsTextFile()
+
+Transformations that trigger shuffle:-
+1. reduceByKey
+2. groupByKey
+3. join
+4. cogroup
+5. repartition
+6. coalesce
+'''
+##############################################################################################
+
 #-----------------------------------------------------------------------------------------------
 # PairRDD "mapValues" transformation
 # mapValues operates on the value only (the second part of the tuple),
@@ -43,45 +69,100 @@ BasicRDD = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/I
 # Aggregation transformations - use Car Sales Data
 #-----------------------------------------------------------------------------------------------
 carRDD = \
-sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.csv")
+sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_data.csv")
 
 
-#?? QNS 1 >>> which product was sold the most
-#---------------------------------------------
-carPairRDD = carRDD.keyBy(lambda x: x.split(',')[3])
-salesByProduct = carPairRDD.groupByKey()
-salesByProductFinal = salesByProduct.map(lambda x: (x[0],len(list(x[1]))))
-sortedBySales = salesByProductFinal.sortBy(lambda x: x[1], ascending=False)
-
-# for i in sortedBySales.take(10):
+#?? QNS 1 >>> Find the top 10 product that has the highest occurance in file
+#---------------------------------------------------------------------------
+# carKVRdd = carRDD.map(lambda x: (x.split(',')[3],x))
+# carKVRdd = carRDD.keyBy(lambda x: x.split(',')[3])
+# carKVRdd2 = carKVRdd.groupByKey()
+# carKVRdd3 = carKVRdd2.map(lambda x: (x[0], len(list(x[1]))))
+# sortedKVRdd = carKVRdd3.sortBy(lambda x: x[1],ascending=False)
+#
+# for i in sortedKVRdd.take(10):
 #     print(i)
-# print('###############################')
 
-carProductNames = carRDD.map(lambda x: x.split(',')[3])
-productCounts = carProductNames.map(lambda x: (x,1))
-topProducts = productCounts.reduceByKey(lambda x,y : (x+y))
-sortedProducts = topProducts.sortBy(lambda x: x[1], ascending=False) # what if you use sortByKey
 
-for i in sortedProducts.take(10):
-    print(i)
-
-#?? QNS 2 >>> Which product was sold the most by Quantity
-# -------------------------------------------------------
+#?? QNS 2 >>> Which product was sold the most by Quantity - find top 5
+# --------------------------------------------------------------------
+# def convert_to_int(record):
+#     try:
+#         x = record[1]
+#         x = int(x)
+#         return x
+#     except ValueError:
+#         pass
+#
+# def add_quantity_sold(x,y):
+#     x = int(x)
+#     y = int(y)
+#     return (x + y)
+#
+# carKvRdd = carRDD.map(lambda x: (x.split(',')[3],x.split(',')[5]))
+# carKvRdd2 = carKvRdd.filter(lambda x: convert_to_int(x))
+# carKvRdd3 = carKvRdd2.reduceByKey(lambda x,y: add_quantity_sold(x,y))
+# carKvRdd31 = carKvRdd3.map(lambda x: (x[0], int(x[1])))
+# carKvRdd4 = carKvRdd31.sortBy(lambda x: x[1], ascending=False)
+#
+# for i in carKvRdd4.take(5):
+#     print(i)
 
 
 #?? QNS 3 >>> Who are the product manufacturers
 # ---------------------------------------------
+# carKvRdd = carRDD.map(lambda x: x.split(',')[6])
+# carKvRdd2 = carKvRdd.distinct()
+# print('Total unique products: ',carKvRdd2.count())
+#
+# for i in carKvRdd2.collect():
+#     print(i)
 
 
-#?? QNS 4 >>> Which model was sold in which country the most
-# ----------------------------------------------------------
+#?? QNS 4 >>> Which model was sold in which country the most - top 25
+# -------------------------------------------------------------------
+# def convert_to_int(record):
+#     x = record[0]
+#     y = record[1]
+#
+#     try:
+#         y = int(y)
+#         return (x,y)
+#     except ValueError:
+#         pass
+#
+# carPairRdd = carRDD.map(lambda x: (x.split(',')[3],x.split(',')[5],x.split(',')[11]))
+# carPairRdd2 = carPairRdd.keyBy(lambda x: (x[0],x[2]))
+# carPairRdd3 = carPairRdd2.map(lambda x:(x[0],x[1][1]))
+# carPairRdd4 = carPairRdd3.filter(lambda x: convert_to_int(x))
+# carPairRdd5 = carPairRdd4.map(lambda x: (x[0], int(x[1])))
+#
+# totQuantRdd = carPairRdd5.reduceByKey(lambda x,y: x+y)
+# totQuantRddSorted = totQuantRdd.sortBy(lambda x: x[1],ascending=False)
+#
+# for i in totQuantRddSorted.take(25):
+#     print(i)
 
 
 #?? QNS 5 >>> Statewise sale figure in each country
 # -------------------------------------------------
+def remove_non_state_countries(record):
+    state = record[1]
 
+    if (len(state)) > 0:
+        return record
+    else:
+        pass
 
-#?? QNS 6 >>> Genderwise distribution of Product Manufacturers
+carNewRdd = carRDD.map(lambda x: (x.split(',')[5], x.split(',')[10], x.split(',')[11]))
+carNewRdd2 = carNewRdd.filter(lambda x: remove_non_state_countries(x))
+
+carPairRdd =
+
+for i in carNewRdd2.take(10):
+    print(i)
+
+#?? QNS 6 >>> Gender-wise distribution of Product Manufacturers
 #-------------------------------------------------------------
 
 
@@ -120,10 +201,11 @@ for i in sortedProducts.take(10):
 
 
 #-----------------------------------------------------------------------------------------------
-# Aggregation transformations - use Plant Data
+# Aggregation transformations - use Plant Data (JSON)
 #-----------------------------------------------------------------------------------------------
 plantRDD = \
 sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/plant_data.csv')
+
 
 #?? QNS 1 >>> which is the most occuring plant family
 #----------------------------------------------------
@@ -147,3 +229,10 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 #-----------------------------------------------------------------------------------------------
 # Join transformations - use Emp and Dept Data files
 #-----------------------------------------------------------------------------------------------
+empRDD = \
+sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data.csv')
+
+deptRDD = \
+sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/dept_data.csv')
+
+#?? QNS 1 >>>
