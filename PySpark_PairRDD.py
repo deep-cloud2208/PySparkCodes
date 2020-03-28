@@ -146,44 +146,70 @@ sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/
 
 #?? QNS 5 >>> Statewise sale figure in each country
 # -------------------------------------------------
-def remove_non_state_countries(record):
-    state = record[1]
+# def remove_non_state_countries(record):
+#     state = record[1]
+#
+#     if (len(state)) > 0:
+#         return record
+#     else:
+#         pass
+#
+# def remove_non_int(record):
+#     x = record[1]
+#     try:
+#         x = int(x)
+#         return record
+#     except ValueError:
+#         pass
+#
+# carNewRdd = carRDD.map(lambda x: (x.split(',')[5], x.split(',')[10], x.split(',')[11]))
+# carNewRdd2 = carNewRdd.filter(lambda x: remove_non_state_countries(x))
+#
+# carPairRdd = carNewRdd2.keyBy(lambda x: (x[2],x[1]))
+# carPairRdd2 = carPairRdd.map(lambda x: (x[0],x[1][0]))
+# carPairRdd3 = carPairRdd2.filter(lambda x: remove_non_int(x))
+# carPairRdd4 = carPairRdd3.map(lambda x: (x[0],int(x[1])))
+# carPairRdd5 = carPairRdd4.reduceByKey(lambda x,y: x+y)
+#
+# for i in carPairRdd5.collect():
+#     print(i)
 
-    if (len(state)) > 0:
-        return record
-    else:
-        pass
-
-carNewRdd = carRDD.map(lambda x: (x.split(',')[5], x.split(',')[10], x.split(',')[11]))
-carNewRdd2 = carNewRdd.filter(lambda x: remove_non_state_countries(x))
-
-carPairRdd =
-
-for i in carNewRdd2.take(10):
-    print(i)
 
 #?? QNS 6 >>> Gender-wise distribution of Product Manufacturers
-#-------------------------------------------------------------
+#--------------------------------------------------------------
 
 
 
 #?? QNS 7 >>> Details of Car make, Product Name and Total Quantity of the oldest car
-#---------------------------------------------------------------------------------
-
+#-----------------------------------------------------------------------------------
+# def remove_non_int(record):
+#     x = record[1]
+#     try:
+#         x = int(x)
+#         return record
+#     except ValueError:
+#         pass
+#
+# carPairRdd = carRDD.map(lambda x: (x.split(',')[6],x.split(',')[3],x.split(',')[5],x.split(',')[8]))
+# carPairRdd2 = carPairRdd.keyBy(lambda x: (x[0],x[1],x[3]))
+# carPairRdd21 = carPairRdd2.map(lambda x: (x[0],x[1][2]))
+# carPairRdd_filter = carPairRdd21.filter(lambda x: remove_non_int(x))
+# carPairRdd3 = carPairRdd_filter.map(lambda x: (x[0],int(x[1])))
+# carPairRdd4 = carPairRdd3.min(lambda x: x[1])
+#
+# print(carPairRdd4)
 
 
 #?? QNS 8 >>> Distribution of colors across Product Names
-#------------------------------------------------------
+#--------------------------------------------------------
 
 
 #?? QNS 9 >>> Find coutries and their currencies where cars are sold
 #-------------------------------------------------------------------
 
 
-
 #?? QNS 10 >>> Which credit has been used the most
 #-------------------------------------------------
-
 
 
 #?? QNS 11 >>> Country, State and Region wise sale figure
@@ -204,26 +230,50 @@ for i in carNewRdd2.take(10):
 # Aggregation transformations - use Plant Data (JSON)
 #-----------------------------------------------------------------------------------------------
 plantRDD = \
-sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/plant_data.csv')
+sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/plant_data.json')
+# sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/plant_data.csv')
 
 
 #?? QNS 1 >>> which is the most occuring plant family
 #----------------------------------------------------
+# import json
+#
+# plantPairRdd1 = plantRDD.map(lambda x: json.loads(x)['plant_family'])
+# plantPairRdd2 = plantPairRdd1.map(lambda x: (x,1))
+# plantPairRdd3 = plantPairRdd2.reduceByKey(lambda x,y: x+y).sortBy(lambda x: x[1],ascending=False)
+#
+# for i in plantPairRdd3.take(10):
+#     print(i)
 
 
 #?? QNS 2 >>> Plant and Country wise distribution
 #------------------------------------------------
+# import json
+# plantRdd1 = plantRDD.map(lambda x: (json.loads(x)['plant_family'], json.loads(x)['country']))
+# plantRdd2 = plantRdd1.map(lambda x: (x[0],x[1],1))
+# plantKeyPairRdd1 = plantRdd2.keyBy(lambda x: (x[0],x[1]))
+# plantKeyPairRdd2 = plantKeyPairRdd1.map(lambda x: (x[0], x[1][2]))
+# plantKeyPairRdd3 = plantKeyPairRdd2.reduceByKey(lambda x,y: x+y)
+# plantKeyPairRdd4 = plantKeyPairRdd3.sortBy(lambda x: x[1],ascending=False)
+#
+# for i in plantKeyPairRdd4.take(10):
+#     print(i)
 
 
 #?? QNS 3 >>> Find location (state) of the most plant found in a country
 #-----------------------------------------------------------------------
 
 
-
 #?? QNS 4 >>> Find the occurance of plant name, plant family and scientific name combination
 #-------------------------------------------------------------------------------------------
-
-
+# import json
+#
+# plantRdd2 = plantRDD.map(lambda x: (json.loads(x)['plant_name'], json.loads(x)['plant_family'], json.loads(x)['scientific_name']))
+# plantRdd3 = plantRdd2.map(lambda x: (x,1))
+# plantRdd4 = plantRdd3.reduceByKey(lambda x,y: x+y)
+#
+# for i in plantRdd4.take(20):
+#     print(i)
 
 
 #-----------------------------------------------------------------------------------------------
@@ -235,4 +285,4 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 deptRDD = \
 sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/dept_data.csv')
 
-#?? QNS 1 >>>
+#?? QNS 1 >>> 
