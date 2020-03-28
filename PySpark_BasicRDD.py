@@ -1,8 +1,8 @@
 from pyspark import SparkContext, SparkConf
-import json
 
-conf = SparkConf().setAppName('intellipaat_rdd').setMaster('local[4]')
+conf = SparkConf().setMaster('local').setAppName('Intellipaat')
 sc = SparkContext(conf=conf)
+
 
 #-----------------------------------------------------------------------------------------------
 # RDD "filter" Transformation
@@ -151,3 +151,16 @@ sc = SparkContext(conf=conf)
 # print("Total Sales: ",rdd_total)
 # print("Max Sales: ",rdd_max)
 # print("Min Sales: ",rdd_min)
+
+
+# def total_records_per_partition(record):
+#     total_record = 0
+#     for x in record:
+#         total_record = total_record + 1
+#     return total_record
+#
+# rdd2 = rdd1.mapPartitions(lambda x: total_records_per_partition(x))
+#
+# print(rdd2.collect())
+
+# for i in rdd2.collect()

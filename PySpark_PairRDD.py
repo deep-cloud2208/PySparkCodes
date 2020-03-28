@@ -9,7 +9,9 @@ sc = SparkContext.getOrCreate(conf=conf)
 #-----------------------------------------------------------------------------------------------
 # Convert a normal RDD to a key value pair RDD - using "map" transformation
 #-----------------------------------------------------------------------------------------------
-BasicRDD = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv')
+BasicRDD = \
+sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv').partitionBy(2)
+
 # PairRDD = BasicRDD.map(lambda x: (x.split(',')[1],x))
 #
 # print('by map transformation...')
@@ -285,4 +287,31 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 deptRDD = \
 sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/dept_data.csv')
 
-#?? QNS 1 >>> 
+
+#?? QNS 1 >>> Find out Department Name of each employee
+#------------------------------------------------------
+
+# empKeyPairRdd = empRDD.map(lambda x: (x.split(',')[0],x.split(',')[1],x.split(',')[2]))
+# deptKeyPairRdd = deptRDD.map(lambda x: (x.split(',')[0],x.split(',')[2]))
+#
+# print(empKeyPairRdd.getNumPartitions())
+# print(deptKeyPairRdd.getNumPartitions())
+
+# joinedRdd = empKeyPairRdd.join(deptKeyPairRdd)
+#
+# distinctRdd = joinedRdd.map(lambda x: x[0])
+#
+# for i in joinedRdd.collect():
+#     print(i)
+
+
+#?? QNS 2 >>> Find ALL Departments and their associated employees
+#-----------------------------------------------------------------
+
+# rightJoinedRdd = empKeyPairRdd.rightOuterJoin(deptKeyPairRdd)
+# for i in rightJoinedRdd.collect():
+#     print(i)
+
+
+##?? QNS 3 >>> Find the department with longest caption
+#-------------------------------------------------------
