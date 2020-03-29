@@ -1,6 +1,6 @@
 from pyspark import SparkContext, SparkConf
 
-conf = SparkConf().setAppName('IntellipaatPairRDD').setMaster('local')
+conf = SparkConf().setAppName('IntellipaatPairRDD').setMaster('local[4]')
 sc = SparkContext.getOrCreate(conf=conf)
 #-----------------------------------------------------------------------------------------------
 # Pair RDDs are RDDs with Key-Value pairs. It is needed most of the cases than normal RDDs.
@@ -54,6 +54,13 @@ Transformations that trigger shuffle:-
 4. cogroup
 5. repartition
 6. coalesce
+
+Partitioning is how parallelism in controlled in Spark. There are teo types of partitioners:
+- Hash Partitioner > partitionBy(<no. of partitions>) > to see output .glom().collect()
+- Range Partitioner 
+
+Small piece of code to get dependencies:
+dependency = sc._jvm.org.apache.spark.api.java.JavaRDD.toRDD(<your-rdd>._jrdd).dependencies()
 '''
 ##############################################################################################
 
@@ -257,7 +264,7 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 # plantKeyPairRdd2 = plantKeyPairRdd1.map(lambda x: (x[0], x[1][2]))
 # plantKeyPairRdd3 = plantKeyPairRdd2.reduceByKey(lambda x,y: x+y)
 # plantKeyPairRdd4 = plantKeyPairRdd3.sortBy(lambda x: x[1],ascending=False)
-#
+
 # for i in plantKeyPairRdd4.take(10):
 #     print(i)
 
@@ -282,7 +289,7 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 # Join transformations - use Emp and Dept Data files
 #-----------------------------------------------------------------------------------------------
 empRDD = \
-sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data.csv')
+sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data.csv',4)
 
 deptRDD = \
 sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/dept_data.csv')
@@ -291,18 +298,17 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 #?? QNS 1 >>> Find out Department Name of each employee
 #------------------------------------------------------
 
-# empKeyPairRdd = empRDD.map(lambda x: (x.split(',')[0],x.split(',')[1],x.split(',')[2]))
-# deptKeyPairRdd = deptRDD.map(lambda x: (x.split(',')[0],x.split(',')[2]))
-#
-# print(empKeyPairRdd.getNumPartitions())
-# print(deptKeyPairRdd.getNumPartitions())
+empKeyPairRdd = empRDD.map(lambda x: (x.split(',')[0],x.split(',')[1],x.split(',')[2]))
+deptKeyPairRdd = deptRDD.map(lambda x: (x.split(',')[0],x.split(',')[2]))
 
-# joinedRdd = empKeyPairRdd.join(deptKeyPairRdd)
-#
-# distinctRdd = joinedRdd.map(lambda x: x[0])
-#
-# for i in joinedRdd.collect():
+joinedRdd = empKeyPairRdd.join(deptKeyPairRdd)
+distinctRdd = joinedRdd.map(lambda x: x[0])
+
+# for i in cogroupRdd2.take(10):
 #     print(i)
+#
+# cogroupRdd = empKeyPairRdd.cogroup(deptKeyPairRdd)
+# cogroupRdd2 = cogroupRdd.map(lambda x: (x[0], list(x[1][0]), list(x[1][1])))
 
 
 #?? QNS 2 >>> Find ALL Departments and their associated employees
@@ -315,3 +321,18 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 
 ##?? QNS 3 >>> Find the department with longest caption
 #-------------------------------------------------------
+# deptRdd1 = deptRDD.map(lambda x: (x.split(',')[2],len(x.split(',')[3])))
+# deptMaxTuple = deptRdd1.max(lambda x: x[1]) # Option 1
+# deptRdd3 = deptRdd1.sortBy(lambda x: x[1],ascending=False) # Option 2
+#
+# print(deptMaxTuple)
+#
+# for i in deptRdd3.take(1):
+#     print(i)
+
+
+#-----------------------------
+# Print the RDD lineage
+#-----------------------------
+# print(rdd.toDebugString())
+
