@@ -9,21 +9,29 @@ sc = SparkContext(conf=conf)
 # Reads all records/lines of an RDD and returns that matches the condition
 # Similar to SQL WHERE clause
 #-----------------------------------------------------------------------------------------------
+# import json
 # def filter_with_zip(line):
 #     line = json.loads(line)
-#     zipcode = line['address']['zipcode']
-#     zipcode = int(zipcode)
-#     if (zipcode > 11000):
+#     # zipcode = line['address']['zipcode']
+#     # zipcode = int(zipcode)
+#     # if (zipcode > 11000):
+#     cuisine = line["cuisine"]
+#     if (cuisine == 'Bakery'):
 #         return line
 #
 # rdd1 = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/restaurants.json")
+#
 # rdd2 = rdd1.filter(lambda x: filter_with_zip(x))
-#
+
 # # Write the above in a single line lambda function
-#
+
 # for i in rdd2.collect(): # "collect" is an RDD "action"
+#     print(i)
 #     var=json.loads(i)
 #     print(var['address']['zipcode'])
+
+# print('Total records in rdd1: ',rdd1.count())
+# print('Total records in rdd2: ',rdd2.count())
 
 
 #-----------------------------------------------------------------------------------------------
@@ -32,13 +40,13 @@ sc = SparkContext(conf=conf)
 # no. of records in the output rdd.
 #-----------------------------------------------------------------------------------------------
 # rdd1 = sc.textFile("file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/sample-data.csv")
-#
+
 # def get_3_fields(record):
 #     x,y,z = record.split(',')[0],record.split(',')[3],record.split(',')[5]
 #     return x,y,z
-#
-# rdd2 = rdd1.map(lambda x: get_3_fields(x))
-#
+
+# rdd2 = rdd1.map(lambda x: (x.split(',')[0], x.split(',')[3], x.split(',')[5]))
+
 # for i in rdd2.collect():
 #     print(list(i))
 
@@ -47,7 +55,8 @@ sc = SparkContext(conf=conf)
 # RDD "flatMap" transformation
 # Takes each record from an RDD and returns multiple rows
 #-----------------------------------------------------------------------------------------------
-# rdd1 = sc.textFile("file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/stream-data.csv")
+# rdd1 = \
+# sc.textFile("file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/stream-data.csv")
 
 # def remove_date(record):
 #     record = record.split('>')
@@ -55,8 +64,9 @@ sc = SparkContext(conf=conf)
 
 # rdd2 = rdd1.map(lambda x: x.split('>')[1])
 # rdd3 = rdd2.flatMap(lambda x: x.split('|'))
+# rdd4 = rdd3.map(lambda x: (x.split('-')[0], x.split('-')[1]))
 #
-# for i in rdd3.collect():
+# for i in rdd4.collect():
 #     print(i)
 
 
@@ -71,13 +81,15 @@ sc = SparkContext(conf=conf)
 
 # rdd1 = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/stream-data.csv")
 # rdd2 = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/stream-data2.csv")
+# rdd3 = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv")
 
-# union_rdd = rdd1.union(rdd2)
+# union_rdd = rdd1.union(rdd3)
 # print(union_rdd.count())
 
-# intersection_rdd = rdd1.intersection(rdd2)
+# intersection_rdd = rdd1.intersection(rdd3)
 
 # for i in union_rdd.collect():
+# for i in union_rdd.take(50):
 # for i in intersection_rdd.collect():
 #     print(i)
 
@@ -91,7 +103,6 @@ sc = SparkContext(conf=conf)
 # def convertToInteger(record):
 #     record = record.split(',')
 #     size = record[2]
-#
 #     try:
 #         size = int(size)
 #         return record
@@ -111,10 +122,11 @@ sc = SparkContext(conf=conf)
 #-----------------------------------------------------------------------------------------------
 # rdd = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv")
 #
-# print(rdd.getNumPartitions())
-# rdd2 = rdd.groupBy(lambda x: x.split(',')[0])
-# rdd3 = rdd2.map(lambda x: (x[0], tuple(x[1])))
-# for i in rdd3.take(50):
+# rdd1 = rdd.map(lambda x: (x.split(',')[0], x.split(',')[3]))
+# rdd2 = rdd1.groupBy(lambda x: x[0])
+# rdd3 = rdd2.map(lambda x:(x[0],list(x[1])))
+#
+# for i in rdd3.take(5):
 # # for i in rdd2.collect():
 #     print(i)
 

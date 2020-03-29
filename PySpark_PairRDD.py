@@ -298,11 +298,11 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 #?? QNS 1 >>> Find out Department Name of each employee
 #------------------------------------------------------
 
-empKeyPairRdd = empRDD.map(lambda x: (x.split(',')[0],x.split(',')[1],x.split(',')[2]))
-deptKeyPairRdd = deptRDD.map(lambda x: (x.split(',')[0],x.split(',')[2]))
-
-joinedRdd = empKeyPairRdd.join(deptKeyPairRdd)
-distinctRdd = joinedRdd.map(lambda x: x[0])
+# empKeyPairRdd = empRDD.map(lambda x: (x.split(',')[0],x.split(',')[1],x.split(',')[2]))
+# deptKeyPairRdd = deptRDD.map(lambda x: (x.split(',')[0],x.split(',')[2]))
+#
+# joinedRdd = empKeyPairRdd.join(deptKeyPairRdd)
+# distinctRdd = joinedRdd.map(lambda x: x[0])
 
 # for i in cogroupRdd2.take(10):
 #     print(i)
