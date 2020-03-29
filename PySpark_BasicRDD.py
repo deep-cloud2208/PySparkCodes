@@ -40,13 +40,13 @@ sc = SparkContext(conf=conf)
 # no. of records in the output rdd.
 #-----------------------------------------------------------------------------------------------
 # rdd1 = sc.textFile("file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/sample-data.csv")
-
+#
 # def get_3_fields(record):
 #     x,y,z = record.split(',')[0],record.split(',')[3],record.split(',')[5]
 #     return x,y,z
-
+#
 # rdd2 = rdd1.map(lambda x: (x.split(',')[0], x.split(',')[3], x.split(',')[5]))
-
+#
 # for i in rdd2.collect():
 #     print(list(i))
 
