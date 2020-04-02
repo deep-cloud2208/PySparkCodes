@@ -10,7 +10,7 @@ sc = SparkContext.getOrCreate(conf=conf)
 # Convert a normal RDD to a key value pair RDD - using "map" transformation
 #-----------------------------------------------------------------------------------------------
 BasicRDD = \
-sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv').partitionBy(2)
+sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv')
 
 # PairRDD = BasicRDD.map(lambda x: (x.split(',')[1],x))
 #
@@ -43,6 +43,10 @@ Pair RDD Transformations:-
 6. cartesian(rdd) - cartesian product of two datasets -> (K1,V1)&(K2,V2) -> ((K,V),(K,V)) 
 7. coalesce - Decrease the no. of partitions.
 8. repartition - Modify the no. of partitions either by increasing or decreasing
+9. glom() - Return an RDD created by coalescing all elements within each partition 
+            into an array. Transforms each partition to a tuple, one tuple per partition.
+10. mapPartitions - Takes an iterable of 'RDD' type and return an iterable of some other or 
+                    the same type.
 
 Actions:-
 reduce(), collect(), count(), countByKey(), take(), saveAsTextFile()
@@ -55,7 +59,7 @@ Transformations that trigger shuffle:-
 5. repartition
 6. coalesce
 
-Partitioning is how parallelism in controlled in Spark. There are teo types of partitioners:
+Partitioning is how parallelism in controlled in Spark. There are two types of partitioners:
 - Hash Partitioner > partitionBy(<no. of partitions>) > to see output .glom().collect()
 - Range Partitioner 
 
@@ -294,7 +298,6 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 deptRDD = \
 sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/dept_data.csv')
 
-
 #?? QNS 1 >>> Find out Department Name of each employee
 #------------------------------------------------------
 
@@ -336,3 +339,21 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 #-----------------------------
 # print(rdd.toDebugString())
 
+
+#-------------------------------------------------------------
+# Partition an RDD & get the no. of records per partition
+#-------------------------------------------------------------
+# empPairRdd = empRDD.keyBy(lambda x: x.split(',')[0])
+# empPairRdd2 = empPairRdd.partitionBy(4)
+#
+# for i in empPairRdd2.glom().collect(): # print the no. of records per partition
+#     print(len(i))
+
+
+#-------------------------------------------------------------
+# mapPartitions
+#-------------------------------------------------------------
+# def count_no_of_elements_per_partition(rec):
+#     print(len(list(rec)))
+#
+# empPairRdd3 = empPairRdd.mapPartitions(lambda x: count_no_of_elements_per_partition(x))

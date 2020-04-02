@@ -55,8 +55,8 @@ sc = SparkContext(conf=conf)
 # RDD "flatMap" transformation
 # Takes each record from an RDD and returns multiple rows
 #-----------------------------------------------------------------------------------------------
-# rdd1 = \
-# sc.textFile("file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/stream-data.csv")
+rdd1 = \
+sc.textFile("file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/stream-data.csv")
 
 # def remove_date(record):
 #     record = record.split('>')
