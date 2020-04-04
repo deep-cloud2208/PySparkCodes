@@ -1,4 +1,4 @@
-Institution Name,Main Office,Branch Name,Branch Number,Established Date,Acquired Date,Street Address,City,County,State,Zipcode,Latitude,Longitude,2010 Deposits,2011 Deposits,2012 Deposits,2013 Deposits,2014 Deposits,2015 Deposits,2016 Deposits
+Institution_Name,Main_Office,Branch_Name,Branch_Number,Established_Date,Acquired_Date,Street_Address,City,County,State,Zipcode,Latitude,Longitude,2010_Deposits,2011_Deposits,2012_Deposits,2013_Deposits,2014_Deposits,2015_Deposits,2016_Deposits
 JPMorgan Chase Bank,1,JPMorgan Chase Bank Main Office,0,01/01/1824,,1111 Polaris Parkway,Columbus,Delaware,OH,43240,40.14453,-82.99115,633131000,743268000,832455000,916543000,1032549000,1069425000,1155185000
 JPMorgan Chase Bank,0,Vernon Hills Scarsdale Branch,2,03/20/1961,,676 White Plains Road,Scarsdale,Westchester,NY,10583,40.97008,-73.8067,293229,310791,325742,327930,327792,341475,381558
 JPMorgan Chase Bank,0,Great Neck Northern Boulevard Branch,3,09/09/1963,,410 Northern Boulevard,Great Neck,Nassau,NY,11021,40.77944,-73.7224,191011,206933,216439,237983,234183,262455,278940
