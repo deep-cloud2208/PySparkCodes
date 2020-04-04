@@ -1,4 +1,3 @@
-product_id,sales_person_id,sales_person_name,product_name,price,quantity_sold,product_make,product_color,model_year,region_sold_in,state_sold_in,country_sold_in,buyer_gender,currency,credit_card_type,Car_VIN
 1,845774333-3,thorburgh0,Armada,$561201.23,102569,Nissan,Blue,2005,Santa Rosa,,Brazil,Female,Real,jcb,YV1672MW1B2204808
 2,134459661-4,gbotterell1,Camry,$324836.88,140597,Toyota,Puce,1993,San Diego,California,United States,Male,Dollar,jcb,1G4GE5G39CF846041
 3,654035232-8,ewarren2,57,$772876.84,35260,Maybach,Teal,2003,Jacobina,,Brazil,Male,Real,maestro,WAUKD98PX6A784867

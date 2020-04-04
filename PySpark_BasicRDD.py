@@ -55,8 +55,7 @@ sc = SparkContext(conf=conf)
 # RDD "flatMap" transformation
 # Takes each record from an RDD and returns multiple rows
 #-----------------------------------------------------------------------------------------------
-rdd1 = \
-sc.textFile("file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/stream-data.csv")
+# rdd1 = sc.textFile("file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/stream-data.csv")
 
 # def remove_date(record):
 #     record = record.split('>')
@@ -133,7 +132,7 @@ sc.textFile("file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 #-----------------------------------------------------------------------------------------------
 # RDD "reduce" transformation
 #-----------------------------------------------------------------------------------------------z
-# carRDD = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information_copy.csv")
+# carRDD = sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_data.csv")
 #
 # from decimal import Decimal, InvalidOperation
 # def trim_price(record):

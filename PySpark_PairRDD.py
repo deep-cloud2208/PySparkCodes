@@ -3,9 +3,10 @@ from pyspark import SparkContext, SparkConf
 conf = SparkConf().setAppName('IntellipaatPairRDD').setMaster('local[4]')
 sc = SparkContext.getOrCreate(conf=conf)
 #-----------------------------------------------------------------------------------------------
-# Pair RDDs are RDDs with Key-Value pairs. It is needed most of the cases than normal RDDs.
-# Whenever you see <some-operation>ByKey, that transformation can only be performed on pair
-# RDDs.
+'''
+Pair RDDs are RDDs with Key-Value pairs. It is needed most of the cases than normal RDDs.
+Whenever you see <some-operation>ByKey, that transformation can only be performed on pair RDDs.
+'''
 #-----------------------------------------------------------------------------------------------
 # Convert a normal RDD to a key value pair RDD - using "map" transformation
 #-----------------------------------------------------------------------------------------------
@@ -22,14 +23,14 @@ sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/
 # Convert a normal RDD to a key value pair RDD - using "keyBy" transformation
 #-----------------------------------------------------------------------------------------------
 # pairRDD = BasicRDD.keyBy(lambda x: x.split(',')[1])
-#
+
 # print('by keyBy transformation...')
 # for i in pairRDD.take(5):
 #     print(i)
 
 # print(pairRDD.keys().collect())       # Extract keys
 # print(pairRDD.values().collect())     # Extract values
-# print(pairRDD.lookup('"20140114"'))
+# print(pairRDD.lookup('"20150520"'))
 
 ##############################################################################################
 '''
@@ -37,7 +38,7 @@ Pair RDD Transformations:-
 1. groupByKey() - Group based on a key: (K,V) -> (K, iterable <V>)
 2. reduceByKey(func) - Aggregate by key based on the func: (K,V) -> (K, V after applying func)
 3. sortByKey(ascending=True|False) - Sort on key basis: (K,V) -> (Sorted K,V)
-4. join(rdd) - Joins two RDDs based on key: (K,V)&(K,W) -> (K,(V,W)).
+4. join(rdd) - Joins two RDDs based on key: (K,V) & (K,W) -> (K,(V,W)).
    leftOuterJoin, rightOuterJoin, fullOuterJoin are also there.
 5. cogroup(rdd) - Groups two RDDs based on key: (K,V)&(K,W) -> (K,(iterable V, iterable W))
 6. cartesian(rdd) - cartesian product of two datasets -> (K1,V1)&(K2,V2) -> ((K,V),(K,V)) 
@@ -88,22 +89,23 @@ sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/
 #?? QNS 1 >>> Find the top 10 product that has the highest occurance in file
 #---------------------------------------------------------------------------
 # carKVRdd = carRDD.map(lambda x: (x.split(',')[3],x))
-# carKVRdd = carRDD.keyBy(lambda x: x.split(',')[3])
-# carKVRdd2 = carKVRdd.groupByKey()
-# carKVRdd3 = carKVRdd2.map(lambda x: (x[0], len(list(x[1]))))
-# sortedKVRdd = carKVRdd3.sortBy(lambda x: x[1],ascending=False)
-#
-# for i in sortedKVRdd.take(10):
-#     print(i)
+# # carKVRdd = carRDD.keyBy(lambda x: x.split(',')[3])
+# # carKVRdd2 = carKVRdd.groupByKey()
+# # carKVRdd3 = carKVRdd2.map(lambda x: (x[0], len(list(x[1]))))
+# # sortedKVRdd = carKVRdd3.sortBy(lambda x: x[1],ascending=False)
+# #
+# # for i in sortedKVRdd.take(10):
+# #     print(i)
 
 
 #?? QNS 2 >>> Which product was sold the most by Quantity - find top 5
 # --------------------------------------------------------------------
-# def convert_to_int(record):
+# def filter_out_nonint(record):
 #     try:
+#         y = record
 #         x = record[1]
 #         x = int(x)
-#         return x
+#         return y
 #     except ValueError:
 #         pass
 #
@@ -113,7 +115,7 @@ sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/
 #     return (x + y)
 #
 # carKvRdd = carRDD.map(lambda x: (x.split(',')[3],x.split(',')[5]))
-# carKvRdd2 = carKvRdd.filter(lambda x: convert_to_int(x))
+# carKvRdd2 = carKvRdd.filter(lambda x: filter_out_nonint(x))
 # carKvRdd3 = carKvRdd2.reduceByKey(lambda x,y: add_quantity_sold(x,y))
 # carKvRdd31 = carKvRdd3.map(lambda x: (x[0], int(x[1])))
 # carKvRdd4 = carKvRdd31.sortBy(lambda x: x[1], ascending=False)
@@ -134,6 +136,9 @@ sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/
 
 #?? QNS 4 >>> Which model was sold in which country the most - top 25
 # -------------------------------------------------------------------
+#carRDD is already there, which is not a key pair RDD.
+
+# Option 1 (Better option)
 # def convert_to_int(record):
 #     x = record[0]
 #     y = record[1]
@@ -144,6 +149,18 @@ sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/
 #     except ValueError:
 #         pass
 #
+# carKvRdd1 = carRDD.map(lambda x: (x.split(',')[3],x.split(',')[5],x.split(',')[11]))
+# carKvRdd2 = carKvRdd1.keyBy(lambda x:(x[0],x[2]))
+# carKvRdd3 = carKvRdd2.mapValues(lambda x: x[1])
+# carKvRdd4 = carKvRdd3.filter(lambda x: convert_to_int(x))
+# carKvRdd5 = carKvRdd4.map(lambda x: (x[0], int(x[1])))
+# carKvRdd6 = carKvRdd5.reduceByKey(lambda x,y: x+y)
+# carKvRdd7 = carKvRdd6.sortBy(lambda x: x[1],ascending=False)
+#
+# for i in carKvRdd7.take(25):
+#     print(i)
+
+# Option 2 - Just check this out for another option. But use Option 1
 # carPairRdd = carRDD.map(lambda x: (x.split(',')[3],x.split(',')[5],x.split(',')[11]))
 # carPairRdd2 = carPairRdd.keyBy(lambda x: (x[0],x[2]))
 # carPairRdd3 = carPairRdd2.map(lambda x:(x[0],x[1][1]))
@@ -293,25 +310,26 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 # Join transformations - use Emp and Dept Data files
 #-----------------------------------------------------------------------------------------------
 empRDD = \
-sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data.csv',4)
+sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data.csv')
 
 deptRDD = \
 sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/dept_data.csv')
 
 #?? QNS 1 >>> Find out Department Name of each employee
 #------------------------------------------------------
-
 # empKeyPairRdd = empRDD.map(lambda x: (x.split(',')[0],x.split(',')[1],x.split(',')[2]))
 # deptKeyPairRdd = deptRDD.map(lambda x: (x.split(',')[0],x.split(',')[2]))
 #
 # joinedRdd = empKeyPairRdd.join(deptKeyPairRdd)
-# distinctRdd = joinedRdd.map(lambda x: x[0])
-
-# for i in cogroupRdd2.take(10):
+#
+# for i in joinedRdd.collect():
 #     print(i)
 #
 # cogroupRdd = empKeyPairRdd.cogroup(deptKeyPairRdd)
 # cogroupRdd2 = cogroupRdd.map(lambda x: (x[0], list(x[1][0]), list(x[1][1])))
+#
+# for i in cogroupRdd2.take(10):
+#     print(i)
 
 
 #?? QNS 2 >>> Find ALL Departments and their associated employees
