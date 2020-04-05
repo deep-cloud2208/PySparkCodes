@@ -1,15 +1,16 @@
-from pyspark.sql import SparkSession
-from pyspark import SparkContext, SparkConf, SQLContext
+from pyspark import SparkContext, SparkConf
+from pyspark.sql import SQLContext
 from pyspark.streaming import StreamingContext
+from pyspark.sql import SparkSession
 
 # Lets see SparkContext in a little bit more detail :--
 # conf = SparkConf().setMaster('local')
-# sc1 = SparkContext(conf=conf)
+# sc = SparkContext(conf=conf)
 # sc2 = SparkContext(conf=conf)
-# sql = SQLContext(sc1)
+# sql = SQLContext(sc)
 
 # # lets see the SparkContext object
-# print(">> SparkContext Object 1  : ",sc1)
+# print(">> SparkContext Object 1  : ",sc)
 # print(">> SparkContext Object 2  : ",sc2) # can be solved by setting spark.driver.allowMultipleContexts to 'true'
 # print(">> SQLContext Object      : ",sql)
 # print(">> StreamingContext Object: ",stream)
@@ -24,7 +25,7 @@ SparkSession can be created from an existing SparkContext using SQLContext
 '''
 #-----------------------------------------------------------------------------------------------
 # ss = sql.sparkSession # From PREVIOUS SPARKCONTEXT
-# ss = SparkSession.builder.appName('Intellipaat-Dataframes').master('local').getOrCreate()
+ss = SparkSession.builder.appName('Intellipaat-Dataframes').master('local').getOrCreate()
 # ss2 = ss.newSession()
 # ss3 = ss.newSession()
 #
@@ -93,8 +94,8 @@ StructType([ StructField(), StructField(), StructField() ])
 To check the schema use printSchema().
 '''
 #-----------------------------------------------------------------------------------------------
-# from pyspark.sql.types import StructType, StructField
-# from pyspark.sql.types import StringType, IntegerType, ArrayType, FloatType
+from pyspark.sql.types import StructType, StructField
+from pyspark.sql.types import StringType, IntegerType, ArrayType, FloatType, DateType
 #
 # input_restaurant_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/restaurants.json'
 # input_emp_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data.csv'
@@ -190,11 +191,26 @@ from pyspark.sql.types import StringType, StructField, StructType, IntegerType
 
 #-----------------------------------------------------------------------------------------------
 # col, column function
+# Note: Please install pyspark-stubs to use col and column functions. This is needed for PyCharm
+#       IDE as these functions are resolved at runtime.
 #-----------------------------------------------------------------------------------------------
-# from pyspark.sql import functions
+from pyspark.sql.functions import col, column
+
 # input_jpmc_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
+# ss = SparkSession.builder.getOrCreate()
+
 # df1 = ss.read.format('csv').option('header','true').load(input_jpmc_file)
 # df1.show()
+# print(df1.columns)
+# df1.printSchema()
+
+# df1.select(col("Branch_Name").startswith("J"))
+# df1.select("Branch_Name","2010_Deposits").filter(col("2010_Deposits").cast(IntegerType()) > 1000000).show(5)
+
+# df2 = df1.select("Branch_Name","2010_Deposits")
+# df2.show()
+# df1.select("Branch_Name","Established_Date").filter(df1["Branch_Name"].startswith("JP")).show()
+
 
 #-----------------------------------------------------------------------------------------------
 '''
@@ -210,9 +226,21 @@ DataFrame Transformations
 - agg
 '''
 #-----------------------------------------------------------------------------------------------
-# input_jpmc_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
-# df1 = ss.read.format('csv').option('header','true').load(input_jpmc_file)
-#
+input_jpmc_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
+df1 = ss.read.format('csv').option('header','true').load(input_jpmc_file)
+
 # df1.printSchema()
-# # df1.select('Institution_Name','Branch_Name','Established_Date').show()
-# df1.filter(functions.Column('Branch_Number').).show()
+# df1.select('Institution_Name','Branch_Name','Established_Date').show()
+# df1.select('Institution_Name','Branch_Name','Established_Date').limit(10).show()
+# df2 = df1.select('Institution_Name','Branch_Name','Established_Date')
+# df3 = df2.filter(col("Branch_Name").startswith("J"))
+# df3 = df2.where(col("Branch_Name").startswith("J"))
+# df3.show()
+# print(df3.count())
+
+# df2 = df1.select("Branch_Name", "2010_Deposits","Established_Date")
+# df3 = df2.orderBy(col("2010_Deposits").cast(IntegerType()).desc())
+# df3 = df2.sort(col("2010_Deposits").cast(IntegerType()).desc())
+# df3.show()
+
+

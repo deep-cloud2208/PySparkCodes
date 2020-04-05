@@ -10,8 +10,8 @@ Whenever you see <some-operation>ByKey, that transformation can only be performe
 #-----------------------------------------------------------------------------------------------
 # Convert a normal RDD to a key value pair RDD - using "map" transformation
 #-----------------------------------------------------------------------------------------------
-BasicRDD = \
-sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv')
+# BasicRDD = \
+# sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv')
 
 # PairRDD = BasicRDD.map(lambda x: (x.split(',')[1],x))
 #
@@ -89,13 +89,13 @@ sc.textFile("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/
 #?? QNS 1 >>> Find the top 10 product that has the highest occurance in file
 #---------------------------------------------------------------------------
 # carKVRdd = carRDD.map(lambda x: (x.split(',')[3],x))
-# # carKVRdd = carRDD.keyBy(lambda x: x.split(',')[3])
-# # carKVRdd2 = carKVRdd.groupByKey()
-# # carKVRdd3 = carKVRdd2.map(lambda x: (x[0], len(list(x[1]))))
-# # sortedKVRdd = carKVRdd3.sortBy(lambda x: x[1],ascending=False)
-# #
-# # for i in sortedKVRdd.take(10):
-# #     print(i)
+# carKVRdd = carRDD.keyBy(lambda x: x.split(',')[3])
+# carKVRdd2 = carKVRdd.groupByKey()
+# carKVRdd3 = carKVRdd2.map(lambda x: (x[0], len(list(x[1]))))
+# sortedKVRdd = carKVRdd3.sortBy(lambda x: x[1],ascending=False)
+#
+# for i in sortedKVRdd.take(10):
+#     print(i)
 
 
 #?? QNS 2 >>> Which product was sold the most by Quantity - find top 5
@@ -352,20 +352,28 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 #     print(i)
 
 
-#-----------------------------
-# Print the RDD lineage
-#-----------------------------
-# print(rdd.toDebugString())
+#--------------------------------------------
+# Print the RDD lineage - toDebugString()
+#--------------------------------------------
+# print(sortedKVRdd.toDebugString())
 
+#-------------------------------------------------------------
+# Get Partition No. for a basic RDD
+#-------------------------------------------------------------
+# BasicRDD = \
+# sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_data.csv')
+# print("No. of partitions being used: ", BasicRDD.getNumPartitions())
 
 #-------------------------------------------------------------
 # Partition an RDD & get the no. of records per partition
 #-------------------------------------------------------------
+# empRDD = sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data.csv')
 # empPairRdd = empRDD.keyBy(lambda x: x.split(',')[0])
 # empPairRdd2 = empPairRdd.partitionBy(4)
 #
 # for i in empPairRdd2.glom().collect(): # print the no. of records per partition
-#     print(len(i))
+#     print(i)
+    # print(len(i))
 
 
 #-------------------------------------------------------------
@@ -375,3 +383,5 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 #     print(len(list(rec)))
 #
 # empPairRdd3 = empPairRdd.mapPartitions(lambda x: count_no_of_elements_per_partition(x))
+
+
