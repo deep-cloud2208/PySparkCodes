@@ -1,9 +1,9 @@
-from pyspark import SparkContext, SparkConf
-from pyspark.sql import SQLContext
-from pyspark.streaming import StreamingContext
+# from pyspark import SparkContext, SparkConf
+# from pyspark.sql import SQLContext
+# from pyspark.streaming import StreamingContext
 from pyspark.sql import SparkSession
 
-# Lets see SparkContext in a little bit more detail :--
+# # Lets see SparkContext in a little bit more detail :--
 # conf = SparkConf().setMaster('local')
 # sc = SparkContext(conf=conf)
 # sc2 = SparkContext(conf=conf)
@@ -12,7 +12,7 @@ from pyspark.sql import SparkSession
 # # lets see the SparkContext object
 # print(">> SparkContext Object 1  : ",sc)
 # print(">> SparkContext Object 2  : ",sc2) # can be solved by setting spark.driver.allowMultipleContexts to 'true'
-# print(">> SQLContext Object      : ",sql)
+# # print(">> SQLContext Object      : ",sql)
 # print(">> StreamingContext Object: ",stream)
 # print("SparkContext Object: ",sc2)
 
@@ -25,10 +25,10 @@ SparkSession can be created from an existing SparkContext using SQLContext
 '''
 #-----------------------------------------------------------------------------------------------
 # ss = sql.sparkSession # From PREVIOUS SPARKCONTEXT
-ss = SparkSession.builder.appName('Intellipaat-Dataframes').master('local').getOrCreate()
+# ss = SparkSession.builder.appName('Intellipaat-Dataframes').master('local').getOrCreate()
 # ss2 = ss.newSession()
 # ss3 = ss.newSession()
-#
+
 # print("1st SparkSession: ",ss)
 # print("2nd SparkSession: ",ss2)
 # print("3rd SparkSession: ",ss3)
@@ -57,19 +57,28 @@ write modes = "append" | "overwrite" | "errorIfExists" | "ignore"
 ** Data can be read from JDBC sources too.
 '''
 #-----------------------------------------------------------------------------------------------
-# input_file_csv = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data.csv'
-# df1 = ss.read.format('csv').option('header','true').option('inferSchema','true').load(input_file_csv)
-
-# input_file_parquet = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/covid-19_patients_data.parquet/part-00000-a1ec0671-08c6-4f32-ba02-f76efb498434-c000.snappy.parquet'
-# df1 = ss.read.format('parquet').load(input_file_parquet) # No need to provide any schema
-# df1.printSchema()
-
-# input_file_json = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
-# df1 = ss.read.format('json').option('inferSchema','true').load(input_file_json)
-
-# df1 = sql.read.format('csv').option('inferSchema','true').load(input_file_json)
+ss = SparkSession.builder.appName('intellipaat-sparksession').master('local').getOrCreate()
+# input_file_csv = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data_ORIG.csv'
+# input_file_csv = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data_wo_header.csv'
+# df1 = ss.read.format('csv').option('header','true').load(input_file_csv)
 # df1.show()
 
+# input_file_parquet = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/covid-19_patients_data.parquet/part-00000-cffc2fa1-1dd0-4b68-8005-e08f9806ee19-c000.snappy.parquet'
+# df1 = ss.read.format('parquet').load(input_file_parquet) # No need to provide any schema
+# df1.printSchema()
+# df1.show()
+
+# input_file_json = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
+# input_file_json = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/restaurants.json'
+# df1 = ss.read.format('json').option('inferSchema','true').load(input_file_json)
+# df1.show()
+# df1.printSchema()
+
+# df1 = sql.read.format('json').option('inferSchema','true').load(input_file_json)
+# df1.show()
+
+# df1 = ss.read.format('json').option('inferSchema','true').load(input_file_json)
+# df1.printSchema()
 
 #-----------------------------------------------------------------------------------------------
 '''
@@ -94,29 +103,33 @@ StructType([ StructField(), StructField(), StructField() ])
 To check the schema use printSchema().
 '''
 #-----------------------------------------------------------------------------------------------
-from pyspark.sql.types import StructType, StructField
-from pyspark.sql.types import StringType, IntegerType, ArrayType, FloatType, DateType
-#
+from pyspark.sql.types import StructType, StructField, IntegerType, StringType, ArrayType, FloatType
+
+
 # input_restaurant_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/restaurants.json'
-# input_emp_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data.csv'
-#
+# input_emp_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data_ORIG.csv'
+
 # emp_schema = StructType(
 #     [
-#         StructField("dept_id", IntegerType(),False),
-#         StructField("first_name", StringType(), False),
-#         StructField("last_name", StringType(), False),
-#         StructField("email", StringType(), False),
-#         StructField("role", StringType(), False)
+#         StructField('dept_id', IntegerType(), True),
+#         StructField('first_name', StringType(), True),
+#         StructField('last_name', StringType(), True),
+#         StructField('email', StringType(), True),
+#         StructField('role', StringType(), True)
 #     ]
 # )
 #
+# empDf = ss.read.format('csv').schema(emp_schema).load((input_emp_file))
+# empDf.printSchema()
+# empDf.show()
+
 # restaurant_schema = StructType(
 #     [
-#         StructField("address",StructType([StructField("building",StringType(),False),
-#                                           StructField("coord",ArrayType(FloatType()),False),
-#                                           StructField("street",StringType(),False),
-#                                           StructField("zipcode",StringType(),False)]),
-#                      False),
+#         StructField("address",StructType([StructField("building",StringType(),True),
+#                                           StructField("coord",ArrayType(FloatType()),True),
+#                                           StructField("street",StringType(),True),
+#                                           StructField("zipcode",StringType(),True)]),
+#                      True),
 #         StructField("borough",StringType(),False),
 #         StructField("cuisine",StringType(),False),
 #         StructField("grades",ArrayType(StructType([StructField("date",StructType([StructField("$date",IntegerType(),False)]),False),
@@ -129,11 +142,11 @@ from pyspark.sql.types import StringType, IntegerType, ArrayType, FloatType, Dat
 # )
 
 # df1 = ss.read.format('json').schema(restaurant_schema).load(input_restaurant_file)
+# df1 = ss.read.format('json').option('inferSchema','true').load(input_restaurant_file)
 # df1 = ss.read.format('json').load(input_restaurant_file).schem(schema) # Will give error
 # df1.printSchema()
+# df1.show()
 
-# df2 = ss.read.format('csv').schema(emp_schema).load(input_emp_file)
-# df2.printSchema()
 
 
 #-----------------------------------------------------------------------------------------------
@@ -220,27 +233,130 @@ DataFrame Transformations
 - filter | where
 - orderBy
 - sort
-- union
 - groupBy
+- union
 - join
 - agg
 '''
 #-----------------------------------------------------------------------------------------------
-input_jpmc_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
-df1 = ss.read.format('csv').option('header','true').load(input_jpmc_file)
+# input_jpmc_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
+# df1 = ss.read.format('csv').option('header','true').load(input_jpmc_file)
 
 # df1.printSchema()
+
+# SELECT
 # df1.select('Institution_Name','Branch_Name','Established_Date').show()
 # df1.select('Institution_Name','Branch_Name','Established_Date').limit(10).show()
+
+# FILTER | WHERE
+#----------------
 # df2 = df1.select('Institution_Name','Branch_Name','Established_Date')
 # df3 = df2.filter(col("Branch_Name").startswith("J"))
 # df3 = df2.where(col("Branch_Name").startswith("J"))
 # df3.show()
 # print(df3.count())
 
+# ORDERBY | SORT | LIMIT
+#------------------------
 # df2 = df1.select("Branch_Name", "2010_Deposits","Established_Date")
 # df3 = df2.orderBy(col("2010_Deposits").cast(IntegerType()).desc())
 # df3 = df2.sort(col("2010_Deposits").cast(IntegerType()).desc())
-# df3.show()
+# df4 = df3.limit(5)
+# df4.show()
+# df2 = df1.select('Branch_Name').distinct().limit(5)
+# df2 = df1.select('Branch_Name').orderBy('Branch_Name')
+# df2.show()
+
+#---------------------------------------------------------------------------------------------------------
+# JOIN - Joins with another DataFrame
+# join(DataFrame, <list of col names | single col | a join expression>,
+#                 <'inner|cross|left_outer|right_outer'>)
+#---------------------------------------------------------------------------------------------------------
+# emp_data_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data_ORIG.csv'
+# dept_data_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/dept_data.csv'
+# empDf = ss.read.format('csv').option('header','true').load(emp_data_file)
+# deptDf = ss.read.format('csv').option('header','true').load(dept_data_file)
+
+# joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner')
+# emp = empDf.alias('emp')
+# dept = empDf.alias('dept')
+# joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner').drop(deptDf.dept_id)
+# joined_data = emp.join(deptDf, ['dept_id'] , 'inner')
+# joined_data2 = joined_data.select('dept_id','first_name','email','dept_name')
+
+# What if column names are different >>>
+# emp = empDf.alias('emp').withColumnRenamed('deptid','dept_id')
+# joined_data = emp.join(deptDf, ['dept_id'] , 'inner')
+
+# joined_data.show()
+
+# join using multiple columns >>>
+# inspection = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/inspections_plus.csv'
+# violations = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv'
+
+# from pyspark.sql.types import StructField, StructType
+# from pyspark.sql.types import StringType, IntegerType
+
+# inspection_schema = StructType(
+#     [
+#         StructField('location_id',IntegerType(),True),
+#         StructField('inspection_id',IntegerType(),True),
+#         StructField('inspection_date',StringType(),True),
+#         StructField('description',StringType(),True),
+#     ]
+# )
+
+# violations_schema = StructType(
+#     [
+#         StructField('location_id',IntegerType(),True),
+#         StructField('violation_date',StringType(),True),
+#         StructField('violation_code', IntegerType(),True),
+#         StructField('violation_category', StringType(),True),
+#         StructField('violation_desc',StringType(), True)
+#     ]
+# )
+
+# inspectionDf = ss.read.format('csv').schema(inspection_schema).load(inspection)
+# violationsDf = ss.read.format('csv').schema(violations_schema).load(violations)
+# vDf = violationsDf.withColumnRenamed('violation_date','date')
+# iDf = inspectionDf.withColumnRenamed('inspection_date','date')
+
+# joined_data = inspectionDf.join(violationsDf, (inspectionDf.location_id == violationsDf.location_id) & \
+#                                               (inspectionDf.inspection_date == violationsDf.violation_date),
+#                                 'inner').drop('violationsDf.violation_date','violationsDf.location_id')
+
+# joined_data = iDf.join(vDf, ['location_id','date'], 'inner')
+# joined_data.show()
+
+# LIT function
+#------------------
+# from pyspark.sql.functions import lit
+#
+# nu = 10
+# chr = "Shommodeep Dey"
+# dec = 24.08
+#
+# df = violationsDf.select(lit(nu),lit(chr),lit(dec))
+# df.printSchema()
+# print(df.dtypes)
 
 
+#---------------------------------------------------------------------------------------------------------
+# groupBy and agg - Pass the no. of columns and get aggregate value from it
+# avg, count, max, mean, min, sum, countDistinct, stddev
+#---------------------------------------------------------------------------------------------------------
+# covid_data = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/covid-19_patients_data_ORIG.csv'
+#
+# covidDf = ss.read.format('csv').option('header','true').load(covid_data)
+#
+# df1 = covidDf.groupBy('gender').max()
+# df1.show()
+
+#?? QNS 1 >>> Find the top 10 product that has the highest occurance in file
+#---------------------------------------------------------------------------
+
+
+
+#---------------------------------------------------------------------------------------------------------
+# Handle complex structure
+#---------------------------------------------------------------------------------------------------------

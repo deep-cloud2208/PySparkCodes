@@ -266,13 +266,13 @@ sc.textFile('file:///Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intel
 
 #?? QNS 1 >>> which is the most occuring plant family
 #----------------------------------------------------
-# import json
+import json
 #
-# plantPairRdd1 = plantRDD.map(lambda x: json.loads(x)['plant_family'])
+# plantPairRdd1 = plantRDD.map(lambda x: json.loads(x)['state'])
 # plantPairRdd2 = plantPairRdd1.map(lambda x: (x,1))
 # plantPairRdd3 = plantPairRdd2.reduceByKey(lambda x,y: x+y).sortBy(lambda x: x[1],ascending=False)
 #
-# for i in plantPairRdd3.take(10):
+# for i in plantPairRdd1.take(10):
 #     print(i)
 
 
