@@ -245,8 +245,12 @@ DataFrame Transformations
 # df1.printSchema()
 
 # SELECT
+#--------
 # df1.select('Institution_Name','Branch_Name','Established_Date').show()
-# df1.select('Institution_Name','Branch_Name','Established_Date').limit(10).show()
+# df2 = df1.select('Institution_Name','Branch_Name','Established_Date').limit(100).show(75,False)
+
+# for i in df2.take(75):
+#     print(i)
 
 # FILTER | WHERE
 #----------------
@@ -270,33 +274,38 @@ DataFrame Transformations
 #---------------------------------------------------------------------------------------------------------
 # JOIN - Joins with another DataFrame
 # join(DataFrame, <list of col names | single col | a join expression>,
-#                 <'inner|cross|left_outer|right_outer'>)
+#                 <'inner|cross|left_outer|right_outer|outer|left_semi|right_semi|left_anti'>)
 #---------------------------------------------------------------------------------------------------------
 # emp_data_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data_ORIG.csv'
 # dept_data_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/dept_data.csv'
 # empDf = ss.read.format('csv').option('header','true').load(emp_data_file)
 # deptDf = ss.read.format('csv').option('header','true').load(dept_data_file)
 
-# joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner')
+# joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner').show()
 # emp = empDf.alias('emp')
 # dept = empDf.alias('dept')
-# joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner').drop(deptDf.dept_id)
-# joined_data = emp.join(deptDf, ['dept_id'] , 'inner')
+# joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner')
 # joined_data2 = joined_data.select('dept_id','first_name','email','dept_name')
 
-# What if column names are different >>>
-# emp = empDf.alias('emp').withColumnRenamed('deptid','dept_id')
+## 1. Note:  Remove duplicate columns using DROP >>>
+# joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner').drop(deptDf.dept_id)
+
+## 2. Note:  Will remove duplicate columns automatically >>>
 # joined_data = emp.join(deptDf, ['dept_id'] , 'inner')
 
+## 3. Note: What if column names are different and you want to use the above expression >>>
+##          -> RENAME the column before performing join >>>
+# emp = empDf.alias('emp').withColumnRenamed('deptid','dept_id')
+# joined_data = emp.join(deptDf, ['dept_id'] , 'inner')
 # joined_data.show()
 
-# join using multiple columns >>>
+## 4. Note: join using multiple columns >>>
 # inspection = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/inspections_plus.csv'
 # violations = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/violations_plus.csv'
-
+#
 # from pyspark.sql.types import StructField, StructType
 # from pyspark.sql.types import StringType, IntegerType
-
+#
 # inspection_schema = StructType(
 #     [
 #         StructField('location_id',IntegerType(),True),
@@ -305,7 +314,7 @@ DataFrame Transformations
 #         StructField('description',StringType(),True),
 #     ]
 # )
-
+#
 # violations_schema = StructType(
 #     [
 #         StructField('location_id',IntegerType(),True),
@@ -315,18 +324,29 @@ DataFrame Transformations
 #         StructField('violation_desc',StringType(), True)
 #     ]
 # )
-
+#
 # inspectionDf = ss.read.format('csv').schema(inspection_schema).load(inspection)
 # violationsDf = ss.read.format('csv').schema(violations_schema).load(violations)
 # vDf = violationsDf.withColumnRenamed('violation_date','date')
 # iDf = inspectionDf.withColumnRenamed('inspection_date','date')
-
+#
 # joined_data = inspectionDf.join(violationsDf, (inspectionDf.location_id == violationsDf.location_id) & \
 #                                               (inspectionDf.inspection_date == violationsDf.violation_date),
-#                                 'inner').drop('violationsDf.violation_date','violationsDf.location_id')
-
+#                                 'inner').drop(violationsDf.violation_date).drop(violationsDf.location_id)
+#
 # joined_data = iDf.join(vDf, ['location_id','date'], 'inner')
 # joined_data.show()
+
+## 5. Note: How Spark performs JOIN operations. Use EXPLAIN. >>>
+##          Shuffle Join and Broadcast Join >>>
+# from pyspark.sql.functions import broadcast
+# joined_data = inspectionDf.join(broadcast(violationsDf), (inspectionDf.location_id == violationsDf.location_id) & \
+#                                               (inspectionDf.inspection_date == violationsDf.violation_date),
+#                                 'inner').drop(violationsDf.violation_date).drop(violationsDf.location_id)
+#
+# joined_data.explain()     ## To check only the physical plan
+# joined_data.explain(True) ## To get all plans
+
 
 # LIT function
 #------------------
@@ -343,20 +363,56 @@ DataFrame Transformations
 
 #---------------------------------------------------------------------------------------------------------
 # groupBy and agg - Pass the no. of columns and get aggregate value from it
-# avg, count, max, mean, min, sum, countDistinct, stddev
+# withColumn, avg, count, max, mean, min, sum, countDistinct, sumDistinct
 #---------------------------------------------------------------------------------------------------------
-# covid_data = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/covid-19_patients_data_ORIG.csv'
-#
-# covidDf = ss.read.format('csv').option('header','true').load(covid_data)
-#
-# df1 = covidDf.groupBy('gender').max()
+from pyspark.sql.functions import max, min,sum,avg, col, countDistinct, count
+from pyspark.sql.types import DecimalType, IntegerType
+# bank_data = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
+# bankDf = ss.read.format('csv').option('header','true').load(bank_data)
+
+# df1 = bankDf.select(count('Institution_Name')).show()
+# df1 = bankDf.select(countDistinct('Institution_Name')).show()
+
+# df1 = bankDf.withColumn('diff_in_deposit_16_15', col('2016_Deposits').cast(IntegerType()) - col('2015_Deposits').cast(IntegerType())).show()
+# df1 = bankDf.withColumn('diff_in_deposit_16_15', col('2016_Deposits').cast(IntegerType()) - col('2015_Deposits').cast(IntegerType())).withColumn('diff_15_14',col('2015_Deposits').cast(IntegerType()) - col('2014_Deposits').cast(IntegerType())).show()
+# df1 = bankDf.select(max("2013_Deposits"), min("2016_Deposits"))
 # df1.show()
 
-#?? QNS 1 >>> Find the top 10 product that has the highest occurance in file
+## 1. Note: Change the column name after aggregation >>>
+## 2. Note: Change Data Type of resulting columns >>>
+# df1 = bankDf.select(min("2014_Deposits"), avg("2015_Deposits")).withColumnRenamed('avg(2015_Deposits)','avg_2015_deposits').withColumnRenamed('sum(2014_Deposits)','sum_of_2014_deposits')
+# df1 = bankDf.select(sum("2014_Deposits").alias('sum_2014'), avg("2015_Deposits").alias('avg_2015'))
+# df2 = df1.select(col('sum_2014').cast(IntegerType()), col('avg_2015').cast(DecimalType(12,2)))
+# df2.show()
+
+
+# SELECT AVG(2014_Deposits), MAX(2015_Deposits), MIN('2016_Deposits') FROM BANK GROUP BY city, state
+# df1 = bankDf.groupBy("city","state").agg({'2014_Deposits': 'avg', '2015_Deposits': 'max', '2016_Deposits': 'min'}).show()
+# df1 = bankDf.groupBy("city","state").agg(avg('2014_Deposits').alias('avg_2014_dep'), max('2015_Deposits'), min('2016_Deposits')).show()
+
+
+
+## Practice Questions: Solve the business problems mentioned
+bankfile = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
+bankDf = ss.read.format('csv').option('header','true').load(bankfile)
+
+#?? QNS 1 >>> Find the oldest banks among the lot
 #---------------------------------------------------------------------------
+from pyspark.sql.types import DateType
+from pyspark.sql.functions import lit, to_date, to_timestamp, min
 
+# Option 1
+# bankDf1 = bankDf.select('Main_Office','Branch_Name','Branch_Number',to_date('Established_Date',"MM/dd/yyyy").alias('Established_Date'))
+# bankDf2 = bankDf1.groupBy('Main_Office','Branch_Name','Branch_Number').agg(min('Established_Date').alias('Established_Date'))
+# bankDf3 = bankDf2.orderBy(col('Established_Date').asc())
 
+# Option 2
+# bankDf1 = bankDf.select('Main_Office','Branch_Name','Branch_Number',to_date('Established_Date',"MM/dd/yyyy").alias('Established_Date'))
+# minDate = bankDf1.select(min('Established_Date').alias('Established_Date'))
+# for i in minDate.collect()[0]:
+#     min_date = i
+#     print(min_date)
 
-#---------------------------------------------------------------------------------------------------------
-# Handle complex structure
-#---------------------------------------------------------------------------------------------------------
+# bankDf2 = bankDf1.filter(col('Established_Date') == min_date)
+# bankDf2.show(150,False)
+
