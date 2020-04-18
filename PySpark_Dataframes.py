@@ -197,6 +197,7 @@ from pyspark.sql.types import StringType, StructField, StructType, IntegerType
 # inputRdd1 = sc.textFile(input_file_csv)
 # inputRdd2 = inputRdd1.map(lambda x: convert_to_list(x))
 # inputDf = ss.createDataFrame(inputRdd2,schema=schema)
+# inputDf.show()
 
 # inputDf2 = inputRdd2.toDF(["dept_id","first_name","last_name","email","role"])
 # inputDf2.show()
@@ -337,8 +338,13 @@ DataFrame Transformations
 # joined_data = iDf.join(vDf, ['location_id','date'], 'inner')
 # joined_data.show()
 
-## 5. Note: How Spark performs JOIN operations. Use EXPLAIN. >>>
-##          Shuffle Join and Broadcast Join >>>
+'''
+How Spark performs JOIN operations. Use EXPLAIN. >>>
+Join Types:
+  - Shuffle Hash Join
+  - Broadcast Hash Join
+  - Sort Merge Join
+'''
 # from pyspark.sql.functions import broadcast
 # joined_data = inspectionDf.join(broadcast(violationsDf), (inspectionDf.location_id == violationsDf.location_id) & \
 #                                               (inspectionDf.inspection_date == violationsDf.violation_date),
@@ -401,18 +407,91 @@ bankDf = ss.read.format('csv').option('header','true').load(bankfile)
 from pyspark.sql.types import DateType
 from pyspark.sql.functions import lit, to_date, to_timestamp, min
 
-# Option 1
+# Option 1 :-
 # bankDf1 = bankDf.select('Main_Office','Branch_Name','Branch_Number',to_date('Established_Date',"MM/dd/yyyy").alias('Established_Date'))
 # bankDf2 = bankDf1.groupBy('Main_Office','Branch_Name','Branch_Number').agg(min('Established_Date').alias('Established_Date'))
 # bankDf3 = bankDf2.orderBy(col('Established_Date').asc())
 
-# Option 2
-# bankDf1 = bankDf.select('Main_Office','Branch_Name','Branch_Number',to_date('Established_Date',"MM/dd/yyyy").alias('Established_Date'))
+# Option 2 :-
+# bankDf1 = bankDf.select('Main_Office','Branch_Name','Branch_Number',to_date('Established_Date',"mm/dd/yyyy").alias('Established_Date'))
 # minDate = bankDf1.select(min('Established_Date').alias('Established_Date'))
 # for i in minDate.collect()[0]:
 #     min_date = i
 #     print(min_date)
-
+#
 # bankDf2 = bankDf1.filter(col('Established_Date') == min_date)
 # bankDf2.show(150,False)
 
+
+#?? QNS 2 >>> Find total deposit of 2016 and 2015 by County and State
+#---------------------------------------------------------------------------
+# print(bankDf.select('County','State').distinct().count())
+# df1 = bankDf.select('Main_Office','County','State','2015_Deposits','2016_Deposits')
+# df2 = df1.groupBy('County','State','Main_Office').agg(sum('2015_Deposits').cast(DecimalType(10,2)).alias('tot_2015_deposits'), sum('2016_Deposits').cast(DecimalType(10,2)).alias('tot_2016_deposits'))
+# df3 = df2.orderBy(df2.tot_2016_deposits.desc())
+# df3.show(200,False)
+
+
+#?? QNS 3 >>> Find the individual zip codes and total no. of branches per zip code
+#---------------------------------------------------------------------------------
+# print(bankDf.select('Zipcode').distinct().count())
+# bankDf.groupBy('Zipcode').agg(count('Branch_Name').alias('total_branches')).show()
+
+
+# using car sales dataset
+car_sales_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
+carDf = ss.read.format('json').option('inferSchema','true').load(car_sales_file)
+# carDf.printSchema()
+
+#?? QNS 1 >>> Which product was sold the most by Quantity - find top 5
+# --------------------------------------------------------------------
+# df1 = carDf.select('product_name','quantity_sold').groupBy('product_name').agg(sum('quantity_sold').alias('tot_quantity_sold'))
+# df2 = df1.sort(df1.tot_quantity_sold.desc())
+# df2.limit(5).show()
+
+
+#?? QNS 2 >>> Who are the product manufacturers
+# ---------------------------------------------
+# carDf.selectExpr('product_make').distinct().show()
+
+
+#?? QNS 3 >>> Which model was sold in which country the most - top 25
+# -------------------------------------------------------------------
+from pyspark.sql.functions import desc
+df1 = carDf.select('product_name','country_sold_in')
+df2 = df1.groupBy('product_name','country_sold_in').agg(count('product_name').alias('tot_product_sold'))
+
+# using ORDER BY (orderBy)
+# df3 = df2.orderBy(df2.tot_product_sold.desc()).limit(25)
+# df3 = df2.orderBy(desc("tot_product_sold")).limit(25)
+# df3 = df2.orderBy(["tot_product_sold"], ascending=[0]).limit(25)
+
+# Using SORT
+# df3 = df2.sort("tot_product_sold", ascending=False).limit(5)
+# df3 = df2.sort(desc("tot_product_sold")).limit(5)
+# df3 = df2.sort(df2.tot_product_sold.desc()).limit(5)
+
+# df3.show()
+
+
+#?? QNS 4 >>> Statewise sale figure in each country except USA
+# -------------------------------------------------------------
+# df1 = carDf.select('country_sold_in','state_sold_in','quantity_sold')
+# df2 = df1.groupBy('country_sold_in','state_sold_in').agg(sum('quantity_sold').alias('tot_car_sold'))
+# df3 = df2.where("country_sold_in != 'United States'")
+# df3 = df2.where(col('country_sold_in') != 'United States')
+# df3 = df2.where(col('country_sold_in').__ne__('United States'))
+# df3.show()
+
+
+#?? QNS 5 >>> Details of Car make, Product Name and Total Quantity of the oldest car
+#-----------------------------------------------------------------------------------
+# oldestDate = carDf.select(min('model_year'))
+# for i in oldestDate.collect()[0]:
+#     print(i)
+#
+# df1 = carDf.select('product_make','product_name','quantity_sold','model_year')
+# df2 = df1.filter(col('model_year') == i)
+# df2.show()
+#
+# carDf.where(col('model_year') == 1909).show()
