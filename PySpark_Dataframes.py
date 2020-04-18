@@ -399,8 +399,8 @@ from pyspark.sql.types import DecimalType, IntegerType
 
 
 ## Practice Questions: Solve the business problems mentioned
-bankfile = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
-bankDf = ss.read.format('csv').option('header','true').load(bankfile)
+# bankfile = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
+# bankDf = ss.read.format('csv').option('header','true').load(bankfile)
 
 #?? QNS 1 >>> Find the oldest banks among the lot
 #---------------------------------------------------------------------------
@@ -439,8 +439,8 @@ from pyspark.sql.functions import lit, to_date, to_timestamp, min
 
 
 # using car sales dataset
-car_sales_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
-carDf = ss.read.format('json').option('inferSchema','true').load(car_sales_file)
+# car_sales_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
+# carDf = ss.read.format('json').option('inferSchema','true').load(car_sales_file)
 # carDf.printSchema()
 
 #?? QNS 1 >>> Which product was sold the most by Quantity - find top 5
@@ -458,8 +458,8 @@ carDf = ss.read.format('json').option('inferSchema','true').load(car_sales_file)
 #?? QNS 3 >>> Which model was sold in which country the most - top 25
 # -------------------------------------------------------------------
 from pyspark.sql.functions import desc
-df1 = carDf.select('product_name','country_sold_in')
-df2 = df1.groupBy('product_name','country_sold_in').agg(count('product_name').alias('tot_product_sold'))
+# df1 = carDf.select('product_name','country_sold_in')
+# df2 = df1.groupBy('product_name','country_sold_in').agg(count('product_name').alias('tot_product_sold'))
 
 # using ORDER BY (orderBy)
 # df3 = df2.orderBy(df2.tot_product_sold.desc()).limit(25)
