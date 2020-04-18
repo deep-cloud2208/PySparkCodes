@@ -25,7 +25,7 @@ SparkSession can be created from an existing SparkContext using SQLContext
 '''
 #-----------------------------------------------------------------------------------------------
 # ss = sql.sparkSession # From PREVIOUS SPARKCONTEXT
-# ss = SparkSession.builder.appName('Intellipaat-Dataframes').master('local').getOrCreate()
+ss = SparkSession.builder.appName('Intellipaat-Dataframes').master('local').getOrCreate()
 # ss2 = ss.newSession()
 # ss3 = ss.newSession()
 
@@ -57,7 +57,7 @@ write modes = "append" | "overwrite" | "errorIfExists" | "ignore"
 ** Data can be read from JDBC sources too.
 '''
 #-----------------------------------------------------------------------------------------------
-ss = SparkSession.builder.appName('intellipaat-sparksession').master('local').getOrCreate()
+# ss = SparkSession.builder.appName('intellipaat-sparksession').master('local').getOrCreate()
 # input_file_csv = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data_ORIG.csv'
 # input_file_csv = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data_wo_header.csv'
 # df1 = ss.read.format('csv').option('header','true').load(input_file_csv)
@@ -154,7 +154,7 @@ from pyspark.sql.types import StructType, StructField, IntegerType, StringType, 
 Convert RDD to Dataframe
 - createDataFrame(<rdd>,schema=<myschema>)
   1. Create an RDD
-  2. Convert it to type Row, Tuple, List etc.
+ *2. Convert it to type Row, Tuple, List etc.
   3. Define schema
   3. Apply createDataFrame method on the RDD created in step 2.
   Note: RDD need to have type Row, Tuple, List, Int, Boolean, Pandas DataFrame. If RDD is 
@@ -173,12 +173,15 @@ Convert RDD to Dataframe
 #-----------------------------------------------------------------------------------------------
 from pyspark.sql.types import StringType, StructField, StructType, IntegerType
 # input_file_csv = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data.csv'
-
-# # from pyspark import SparkContext, SparkConf
-# # conf = SparkConf().setMaster('local')
-# # sc = SparkContext(conf=conf)
-# sc = ss.sparkContext
+# ss = SparkSession.builder.appName('PySpark-DataFrame').master('local').getOrCreate()
 #
+# from pyspark import SparkContext, SparkConf
+# conf = SparkConf().setMaster('local')
+# sc = SparkContext(conf=conf)
+
+## Note: Create SparkContext from SparkSession >>>
+# sc = ss.sparkContext
+
 # schema = StructType(
 #     [
 #         StructField("dept_id", IntegerType(), False),
@@ -199,7 +202,8 @@ from pyspark.sql.types import StringType, StructField, StructType, IntegerType
 # inputDf = ss.createDataFrame(inputRdd2,schema=schema)
 # inputDf.show()
 
-# inputDf2 = inputRdd2.toDF(["dept_id","first_name","last_name","email","role"])
+# inputDf2 = inputRdd2.toDF(["deptid","firstname","lastname","email","role"])
+# inputDf2 = inputRdd2.toDF(["id"])
 # inputDf2.show()
 
 
@@ -211,14 +215,13 @@ from pyspark.sql.types import StringType, StructField, StructType, IntegerType
 from pyspark.sql.functions import col, column
 
 # input_jpmc_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
-# ss = SparkSession.builder.getOrCreate()
-
 # df1 = ss.read.format('csv').option('header','true').load(input_jpmc_file)
+
 # df1.show()
 # print(df1.columns)
 # df1.printSchema()
 
-# df1.select(col("Branch_Name").startswith("J"))
+# df1.select(col("Branch_Name").startswith("J")).show()
 # df1.select("Branch_Name","2010_Deposits").filter(col("2010_Deposits").cast(IntegerType()) > 1000000).show(5)
 
 # df2 = df1.select("Branch_Name","2010_Deposits")
@@ -248,23 +251,23 @@ DataFrame Transformations
 # SELECT
 #--------
 # df1.select('Institution_Name','Branch_Name','Established_Date').show()
-# df2 = df1.select('Institution_Name','Branch_Name','Established_Date').limit(100).show(75,False)
+# df2 = df1.select('Institution_Name','Branch_Name','Established_Date').show()
 
 # for i in df2.take(75):
 #     print(i)
 
 # FILTER | WHERE
 #----------------
-# df2 = df1.select('Institution_Name','Branch_Name','Established_Date')
-# df3 = df2.filter(col("Branch_Name").startswith("J"))
+# df2 = df1.select('Institution_Name','Branch_Name','Established_Date')       # dfrdd2 = dfrdd1.map(lambda x: (x[0],x[4],x[10]))
+# df3 = df2.filter(col("Branch_Name").startswith("J"))                        # dfrdd3 = dfrdd2.filter(lambda x: starts_with_j(x))
 # df3 = df2.where(col("Branch_Name").startswith("J"))
 # df3.show()
 # print(df3.count())
 
 # ORDERBY | SORT | LIMIT
 #------------------------
-# df2 = df1.select("Branch_Name", "2010_Deposits","Established_Date")
-# df3 = df2.orderBy(col("2010_Deposits").cast(IntegerType()).desc())
+# df2 = df1.select("Branch_Name", "2010_Deposits","Established_Date")         # dfrdd2 = dfrdd1.map(lambda x: (x[0],x[4],x[10]))
+# df3 = df2.orderBy(col("2010_Deposits").cast(IntegerType()).desc())          # dfrdd3 = dfrdd1.sortBy(lambda x: x[1],ascending=False)
 # df3 = df2.sort(col("2010_Deposits").cast(IntegerType()).desc())
 # df4 = df3.limit(5)
 # df4.show()
@@ -272,10 +275,13 @@ DataFrame Transformations
 # df2 = df1.select('Branch_Name').orderBy('Branch_Name')
 # df2.show()
 
+
 #---------------------------------------------------------------------------------------------------------
-# JOIN - Joins with another DataFrame
-# join(DataFrame, <list of col names | single col | a join expression>,
-#                 <'inner|cross|left_outer|right_outer|outer|left_semi|right_semi|left_anti'>)
+'''
+JOIN - Joins with another DataFrame
+join(DataFrame, <list of col names | single col | a join expression>,
+                <'inner|cross|left_outer|right_outer|outer|left_semi|right_semi|left_anti'>)
+'''
 #---------------------------------------------------------------------------------------------------------
 # emp_data_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data_ORIG.csv'
 # dept_data_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/dept_data.csv'
@@ -285,14 +291,14 @@ DataFrame Transformations
 # joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner').show()
 # emp = empDf.alias('emp')
 # dept = empDf.alias('dept')
-# joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner')
-# joined_data2 = joined_data.select('dept_id','first_name','email','dept_name')
+# joined_data = emp.join(dept, emp.dept_id == dept.dept_id, 'inner')
+# joined_data2 = joined_data.select('dept_id','first_name','email','dept_name').show()
 
 ## 1. Note:  Remove duplicate columns using DROP >>>
-# joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner').drop(deptDf.dept_id)
+# joined_data = empDf.join(deptDf, empDf.dept_id == deptDf.dept_id, 'inner').drop(deptDf.dept_id).drop(deptDf.caption).show()
 
 ## 2. Note:  Will remove duplicate columns automatically >>>
-# joined_data = emp.join(deptDf, ['dept_id'] , 'inner')
+# joined_data = emp.join(deptDf, ['dept_id'] , 'inner').show()
 
 ## 3. Note: What if column names are different and you want to use the above expression >>>
 ##          -> RENAME the column before performing join >>>
@@ -330,14 +336,16 @@ DataFrame Transformations
 # violationsDf = ss.read.format('csv').schema(violations_schema).load(violations)
 # vDf = violationsDf.withColumnRenamed('violation_date','date')
 # iDf = inspectionDf.withColumnRenamed('inspection_date','date')
-#
+
 # joined_data = inspectionDf.join(violationsDf, (inspectionDf.location_id == violationsDf.location_id) & \
 #                                               (inspectionDf.inspection_date == violationsDf.violation_date),
 #                                 'inner').drop(violationsDf.violation_date).drop(violationsDf.location_id)
-#
+
 # joined_data = iDf.join(vDf, ['location_id','date'], 'inner')
 # joined_data.show()
 
+
+#---------------------------------------------------------------------------------------------------------
 '''
 How Spark performs JOIN operations. Use EXPLAIN. >>>
 Join Types:
@@ -345,6 +353,7 @@ Join Types:
   - Broadcast Hash Join
   - Sort Merge Join
 '''
+#---------------------------------------------------------------------------------------------------------
 # from pyspark.sql.functions import broadcast
 # joined_data = inspectionDf.join(broadcast(violationsDf), (inspectionDf.location_id == violationsDf.location_id) & \
 #                                               (inspectionDf.inspection_date == violationsDf.violation_date),
@@ -442,6 +451,7 @@ from pyspark.sql.functions import lit, to_date, to_timestamp, min
 # car_sales_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
 # carDf = ss.read.format('json').option('inferSchema','true').load(car_sales_file)
 # carDf.printSchema()
+
 
 #?? QNS 1 >>> Which product was sold the most by Quantity - find top 5
 # --------------------------------------------------------------------
