@@ -25,7 +25,9 @@ SparkSession can be created from an existing SparkContext using SQLContext
 '''
 #-----------------------------------------------------------------------------------------------
 # ss = sql.sparkSession # From PREVIOUS SPARKCONTEXT
-ss = SparkSession.builder.appName('Intellipaat-Dataframes').master('local').getOrCreate()
+ss = SparkSession.builder.appName('Intellipaat-Dataframes').config('spark.sql.join.preferSortMergeJoin','True').master('local').getOrCreate()
+# ss = SparkSession.builder.master('local').getOrCreate()
+
 # ss2 = ss.newSession()
 # ss3 = ss.newSession()
 
@@ -340,7 +342,7 @@ join(DataFrame, <list of col names | single col | a join expression>,
 # joined_data = inspectionDf.join(violationsDf, (inspectionDf.location_id == violationsDf.location_id) & \
 #                                               (inspectionDf.inspection_date == violationsDf.violation_date),
 #                                 'inner').drop(violationsDf.violation_date).drop(violationsDf.location_id)
-
+#
 # joined_data = iDf.join(vDf, ['location_id','date'], 'inner')
 # joined_data.show()
 
@@ -363,7 +365,7 @@ What about reduceByKey?
 # joined_data = inspectionDf.join(broadcast(violationsDf), (inspectionDf.location_id == violationsDf.location_id) & \
 #                                               (inspectionDf.inspection_date == violationsDf.violation_date),
 #                                 'inner').drop(violationsDf.violation_date).drop(violationsDf.location_id)
-#
+
 # joined_data.explain()     ## To check only the physical plan
 # joined_data.explain(True) ## To get all plans
 
@@ -387,12 +389,13 @@ What about reduceByKey?
 #---------------------------------------------------------------------------------------------------------
 from pyspark.sql.functions import max, min,sum,avg, col, countDistinct, count
 from pyspark.sql.types import DecimalType, IntegerType
-# bank_data = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
-# bankDf = ss.read.format('csv').option('header','true').load(bank_data)
+bank_data = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
+bankDf = ss.read.format('csv').option('header','true').load(bank_data)
 
 # df1 = bankDf.select(count('Institution_Name')).show()
-# df1 = bankDf.select(countDistinct('Institution_Name')).show()
+# df1 = bankDf.select(countDistinct('Institution_Name'))
 
+# bankDf.printSchema()
 # df1 = bankDf.withColumn('diff_in_deposit_16_15', col('2016_Deposits').cast(IntegerType()) - col('2015_Deposits').cast(IntegerType())).show()
 # df1 = bankDf.withColumn('diff_in_deposit_16_15', col('2016_Deposits').cast(IntegerType()) - col('2015_Deposits').cast(IntegerType())).withColumn('diff_15_14',col('2015_Deposits').cast(IntegerType()) - col('2014_Deposits').cast(IntegerType())).show()
 # df1 = bankDf.select(max("2013_Deposits"), min("2016_Deposits"))
@@ -400,21 +403,21 @@ from pyspark.sql.types import DecimalType, IntegerType
 
 ## 1. Note: Change the column name after aggregation >>>
 ## 2. Note: Change Data Type of resulting columns >>>
-# df1 = bankDf.select(min("2014_Deposits"), avg("2015_Deposits")).withColumnRenamed('avg(2015_Deposits)','avg_2015_deposits').withColumnRenamed('sum(2014_Deposits)','sum_of_2014_deposits')
-# df1 = bankDf.select(sum("2014_Deposits").alias('sum_2014'), avg("2015_Deposits").alias('avg_2015'))
+# df1 = bankDf.select(min("2014_Deposits"), avg("2015_Deposits")).withColumnRenamed('avg(2015_Deposits)','avg_2015_deposits').withColumnRenamed('sum(2014_Deposits)','sum_of_2014_deposits').show()
+# df1 = bankDf.select(sum("2014_Deposits").alias('sum_2014'), avg("2015_Deposits").alias('avg_2015')).show()
 # df2 = df1.select(col('sum_2014').cast(IntegerType()), col('avg_2015').cast(DecimalType(12,2)))
 # df2.show()
 
 
 # SELECT AVG(2014_Deposits), MAX(2015_Deposits), MIN('2016_Deposits') FROM BANK GROUP BY city, state
-# df1 = bankDf.groupBy("city","state").agg({'2014_Deposits': 'avg', '2015_Deposits': 'max', '2016_Deposits': 'min'}).show()
+# df1 = bankDf.groupBy("city","state").agg({'2014_Deposits': 'avg', '2015_Deposits': 'max', '2016_Deposits': 'min'}).explain()
 # df1 = bankDf.groupBy("city","state").agg(avg('2014_Deposits').alias('avg_2014_dep'), max('2015_Deposits'), min('2016_Deposits')).show()
 
 
 
 ## Practice Questions: Solve the business problems mentioned
-# bankfile = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
-# bankDf = ss.read.format('csv').option('header','true').load(bankfile)
+bankfile = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
+bankDf = ss.read.format('csv').option('header','true').load(bankfile)
 
 #?? QNS 1 >>> Find the oldest banks among the lot
 #---------------------------------------------------------------------------
@@ -424,7 +427,8 @@ from pyspark.sql.functions import lit, to_date, to_timestamp, min
 # Option 1 :-
 # bankDf1 = bankDf.select('Main_Office','Branch_Name','Branch_Number',to_date('Established_Date',"MM/dd/yyyy").alias('Established_Date'))
 # bankDf2 = bankDf1.groupBy('Main_Office','Branch_Name','Branch_Number').agg(min('Established_Date').alias('Established_Date'))
-# bankDf3 = bankDf2.orderBy(col('Established_Date').asc())
+# bankDf3 = bankDf2.orderBy(col('Established_Date').asc()).show()
+
 
 # Option 2 :-
 # bankDf1 = bankDf.select('Main_Office','Branch_Name','Branch_Number',to_date('Established_Date',"mm/dd/yyyy").alias('Established_Date'))

@@ -35,15 +35,16 @@ Whenever you see <some-operation>ByKey, that transformation can only be performe
 ##############################################################################################
 '''
 Pair RDD Transformations:-
-1. groupByKey() - Group based on a key: (K,V) -> (K, iterable <V>)
-2. reduceByKey(func) - Aggregate by key based on the func: (K,V) -> (K, V after applying func)
-3. sortByKey(ascending=True|False) - Sort on key basis: (K,V) -> (Sorted K,V)
-4. join(rdd) - Joins two RDDs based on key: (K,V) & (K,W) -> (K,(V,W)).
+"*" means involvement of SHUFFLING 
+1. groupByKey() - Group based on a key: (K,V) -> (K, iterable <V>) * 
+2. reduceByKey(func) - Aggregate by key based on the func: (K,V) -> (K, V after applying func) *
+3. sortByKey(ascending=True|False) - Sort on key basis: (K,V) -> (Sorted K,V) *
+4. join(rdd) - Joins two RDDs based on key: (K,V) & (K,W) -> (K,(V,W)). *
    leftOuterJoin, rightOuterJoin, fullOuterJoin are also there.
-5. cogroup(rdd) - Groups two RDDs based on key: (K,V)&(K,W) -> (K,(iterable V, iterable W))
-6. cartesian(rdd) - cartesian product of two datasets -> (K1,V1)&(K2,V2) -> ((K,V),(K,V)) 
-7. coalesce - Decrease the no. of partitions.
-8. repartition - Modify the no. of partitions either by increasing or decreasing
+5. cogroup(rdd) - Groups two RDDs based on key: (K,V)&(K,W) -> (K,(iterable V, iterable W)) *
+6. cartesian(rdd) - cartesian product of two datasets -> (K1,V1)&(K2,V2) -> ((K,V),(K,V)) *
+7. coalesce - Decrease the no. of partitions. 
+8. repartition - Modify the no. of partitions either by increasing or decreasing *
 9. glom() - Return an RDD created by coalescing all elements within each partition 
             into an array. Transforms each partition to a tuple, one tuple per partition.
 10. mapPartitions - Takes an iterable of 'RDD' type and return an iterable of some other or 
