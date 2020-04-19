@@ -352,6 +352,11 @@ Join Types:
   - Shuffle Hash Join
   - Broadcast Hash Join
   - Sort Merge Join
+  
+How did we go groupBy using Pair RDD??
+Step 1: Created a KV RDD using keyBy transformation.
+Step 2: Used groupByKey to group per key that was created in Step 1.
+What about reduceByKey?
 '''
 #---------------------------------------------------------------------------------------------------------
 # from pyspark.sql.functions import broadcast
