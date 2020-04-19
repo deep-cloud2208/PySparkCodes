@@ -461,7 +461,6 @@ from pyspark.sql.functions import lit, to_date, to_timestamp, min
 # carDf = ss.read.format('json').option('inferSchema','true').load(car_sales_file)
 # carDf.printSchema()
 
-
 #?? QNS 1 >>> Which product was sold the most by Quantity - find top 5
 # --------------------------------------------------------------------
 # df1 = carDf.select('product_name','quantity_sold').groupBy('product_name').agg(sum('quantity_sold').alias('tot_quantity_sold'))
