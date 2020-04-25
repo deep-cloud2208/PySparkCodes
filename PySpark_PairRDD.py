@@ -43,7 +43,7 @@ Pair RDD Transformations:-
    leftOuterJoin, rightOuterJoin, fullOuterJoin are also there.
 5. cogroup(rdd) - Groups two RDDs based on key: (K,V)&(K,W) -> (K,(iterable V, iterable W)) *
 6. cartesian(rdd) - cartesian product of two datasets -> (K1,V1)&(K2,V2) -> ((K,V),(K,V)) *
-7. coalesce - Decrease the no. of partitions. 
+7. coalesce - Decrease the no. of partitions *
 8. repartition - Modify the no. of partitions either by increasing or decreasing *
 9. glom() - Return an RDD created by coalescing all elements within each partition 
             into an array. Transforms each partition to a tuple, one tuple per partition.

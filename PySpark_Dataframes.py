@@ -513,3 +513,23 @@ from pyspark.sql.functions import desc
 # df2.show()
 #
 # carDf.where(col('model_year') == 1909).show()
+
+
+#-----------------------------------------------------------------------------------------------
+'''
+Partitioning in DataFrames:
+- repartition (<no. of partitions>, <list of columns>)  Uses Hash Partitioner
+- repartitionByRange(<no. of partitions>, <list of range columns>) Uses Range Partitioner 
+- Configuration 'spark.default.parallelism'
+Note: Can be mentioned while writing DataFrames to files too.
+'''
+#-----------------------------------------------------------------------------------------------
+# car_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
+# df = ss.read.format('json').option('inferSchema','true').load(car_file)
+# print(df.rdd.getNumPartitions())
+#
+# df1 = df.select('product_name','quantity_sold','country_sold_in','state_sold_in').repartition(4,['country_sold_in','state_sold_in'])
+# print(df1.rdd.getNumPartitions())
+#
+# df1 = df.select('product_name','quantity_sold','country_sold_in','state_sold_in').repartitionByRange(4,['country_sold_in','state_sold_in'])
+# print(df1.rdd.getNumPartitions())
