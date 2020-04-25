@@ -359,6 +359,7 @@ How did we go groupBy using Pair RDD??
 Step 1: Created a KV RDD using keyBy transformation.
 Step 2: Used groupByKey to group per key that was created in Step 1.
 What about reduceByKey?
+How to see EXPLAIN PLAN
 '''
 #---------------------------------------------------------------------------------------------------------
 # from pyspark.sql.functions import broadcast
@@ -527,9 +528,14 @@ Note: Can be mentioned while writing DataFrames to files too.
 # car_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
 # df = ss.read.format('json').option('inferSchema','true').load(car_file)
 # print(df.rdd.getNumPartitions())
-#
+
+# df1 = df.select('product_name','quantity_sold','country_sold_in','state_sold_in').repartition(4)
 # df1 = df.select('product_name','quantity_sold','country_sold_in','state_sold_in').repartition(4,['country_sold_in','state_sold_in'])
 # print(df1.rdd.getNumPartitions())
-#
+
 # df1 = df.select('product_name','quantity_sold','country_sold_in','state_sold_in').repartitionByRange(4,['country_sold_in','state_sold_in'])
 # print(df1.rdd.getNumPartitions())
+
+# for i in df1.rdd.glom().collect():
+#     print(i, len(i))
+

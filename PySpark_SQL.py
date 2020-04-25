@@ -16,7 +16,6 @@ Set up some configuration properties in '$SPARK_HOME/conf'
    - With enableHiveSupport() option metastore_db is created in the local directory where PySpark is running from
    - Without enableHiveSupport() option the metastore is stored in memory
    - Spark SQL creates a separate metastore_db in the location where spark-sql is run from 
-
 '''
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 ## Note: Change default SQL Warehouse Directory for the application
