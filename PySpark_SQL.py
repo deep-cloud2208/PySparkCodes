@@ -20,10 +20,12 @@ Set up some configuration properties in '$SPARK_HOME/conf'
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 ## Note: Change default SQL Warehouse Directory for the application
 #--------------------------------------------------------------------------------------------------------------------------------------------------
-# ss = SparkSession.builder.appName('SparkSQL').config('spark.sql.warehouse.dir','/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/IntellipaatSpark/spark-sql-data-dir').master('local').getOrCreate()
+# ss = SparkSession.builder.appName('SparkSQL').config('spark.sql.warehouse.dir','/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/IntellipaatSpark/SparkSqlDataDir').master('local').getOrCreate()
+ss = SparkSession.builder.appName('SparkSQL').master('local').getOrCreate()
 
-# ss1.sql("create database hivedb")
-# ss1.sql("drop database hivedb")
+# ss.sql("show databases").show()
+# ss.sql("create database hivedb")
+# ss.sql("drop database hivedb")
 # carDf.write.saveAsTable("hivedb.car_table")
 # ss1.sql("select * from hivedb.car_table").show()
 
@@ -40,6 +42,13 @@ Set up some configuration properties in '$SPARK_HOME/conf'
 car_file='/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
 carDf = ss.read.format('json').option('inferSchema','true').load(car_file)
 # carTable = carDf.createOrReplaceTempView("car_table")
+
+from pyspark.sql.functions import col
+# carSql = ss.sql("select product_name, quantity_sold from car_table where quantity_sold > 100000 order by quantity_sold desc")
+# carSql.write.mode('append').saveAsTable("intellipaat.car_table")
+
+# carDf.select('product_name', 'quantity_sold').filter(col('quantity_sold') > 100000).orderBy(col('quantity_sold').desc()).show()
+
 # carTable = carDf.createGlobalTempView("car_table")
 
 # carDf.write.saveAsTable('hivedb.car_table')
@@ -71,8 +80,8 @@ carDf = ss.read.format('json').option('inferSchema','true').load(car_file)
 ## Note: Read an SQL table and convert it to a DataFrame >>>
 ##       Create the DataFrame from selecting rows using SELECT statement
 #-----------------------------------------------------------------------------------------------
-# empDf = ss1.sql("SELECT * from hivedb.emp")
-from pyspark.sql.functions import col
+# empDf = ss.sql("SELECT * from intellipaat.car_table")
+# from pyspark.sql.functions import col
 # empDf.filter(col('first_name').startswith('B')).show()
 # empDf.filter(col('dept_id') == 1).show()
 
