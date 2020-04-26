@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
 
-ss1 = SparkSession.builder.appName('SparkSQL1').enableHiveSupport().master('local').getOrCreate()
+ss = SparkSession.builder.appName('SparkSQL1').enableHiveSupport().master('local').getOrCreate()
 # ss1 = SparkSession.builder.appName('SparkSQL1').master('local').getOrCreate()
 # print(ss1.sparkContext.getConf().getAll())
 
@@ -38,7 +38,7 @@ Set up some configuration properties in '$SPARK_HOME/conf'
 ##     - createTempView: Same as "createOrReplaceTempView".
 #-----------------------------------------------------------------------------------------------
 car_file='/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
-carDf = ss1.read.format('json').option('inferSchema','true').load(car_file)
+carDf = ss.read.format('json').option('inferSchema','true').load(car_file)
 # carTable = carDf.createOrReplaceTempView("car_table")
 # carTable = carDf.createGlobalTempView("car_table")
 
@@ -76,4 +76,17 @@ from pyspark.sql.functions import col
 # empDf.filter(col('first_name').startswith('B')).show()
 # empDf.filter(col('dept_id') == 1).show()
 
+
+#-----------------------------------------------------------------------------------------------
+## Execute SQL directly from files
+#-----------------------------------------------------------------------------------------------
+# df1 = ss.read.format('parquet').load("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/IntellipaatSpark/OutputFile/car_sales_information_out/country_sold_in=*/region_sold_in=*/part-*")
+# df1.printSchema()
+# df = ss.sql("select product_name, quantity_sold from parquet.`/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/IntellipaatSpark/OutputFile/car_sales_information_out/country_sold_in=*/region_sold_in=*/part-*`")
+# df.show()
+
+#-----------------------------------------------------------------------------------------------
+## "bucketBy" operation while saving as table"
+## df.format().bucketBy(<no. of buckets>,<list of cols>).saveAsTable(<table name>)
+#-----------------------------------------------------------------------------------------------
 
