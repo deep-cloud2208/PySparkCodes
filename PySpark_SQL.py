@@ -22,6 +22,7 @@ Set up some configuration properties in '$SPARK_HOME/conf'
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 # ss = SparkSession.builder.appName('SparkSQL').config('spark.sql.warehouse.dir','/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/IntellipaatSpark/SparkSqlDataDir').master('local').getOrCreate()
 ss = SparkSession.builder.appName('SparkSQL').master('local').getOrCreate()
+ss.sparkContext.setLogLevel("ERROR")
 
 # ss.sql("show databases").show()
 # ss.sql("create database hivedb")
@@ -41,6 +42,7 @@ ss = SparkSession.builder.appName('SparkSQL').master('local').getOrCreate()
 #-----------------------------------------------------------------------------------------------
 car_file='/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
 carDf = ss.read.format('json').option('inferSchema','true').load(car_file)
+carDf.show()
 # carTable = carDf.createOrReplaceTempView("car_table")
 
 from pyspark.sql.functions import col
