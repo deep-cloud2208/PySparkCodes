@@ -1,10 +1,12 @@
 from pyspark.sql import SparkSession
 from pyspark import SparkContext, SparkConf
 
+# spark-submit
+
 conf = SparkConf()
 sc = SparkContext(conf=conf)
 # ss = SparkSession.builder.config('spark.sql.shuffle.partitions','4').getOrCreate()
-ss = SparkSession.builder.getOrCreate()
+ss = SparkSession.builder.appName("Batch Job Deep").getOrCreate()
 
 '''
 Submit the application using spark-submit --master local PySpark_BatchPerf.py
@@ -23,7 +25,7 @@ Usage: spark-submit run-example [options] example-class [example args]
 --name NAME                 A name of your application.
 
 --master MASTER_URL         local, spark://host:port, mesos://host:port, yarn, or k8s://https://host:port.
-                            (Default: local[*])
+                            (Default: local[*]) ("yarn" is for any cluster that is managed by yarn)
 
 --deploy-mode DEPLOY_MODE   Whether to launch the driver program locally ("client")
                             or on one of the worker machines inside the cluster ("cluster").
@@ -43,8 +45,7 @@ Usage: spark-submit run-example [options] example-class [example args]
                             The format for the coordinates should be groupId:artifactId:version.
 
 --exclude-packages          Comma-separated list of groupId:artifactId,
-                            to exclude while resolving the dependencies provided in --packages
-                            to avoid dependency conflicts.
+                            to exclude while resolving the dependencies provided in --packages to avoid dependency conflicts.
 
 --repositories              Comma-separated list of additional remote repositories to search for the maven coordinates given with --packages.
 
@@ -76,10 +77,10 @@ carDf = ss.read.format('json').option('inferSchema','true').load(car_file)
 #----------------------
 # Demo 1 - Spark UI
 #----------------------
-# df1 = carDf.select('product_name','quantity_sold','model_year')
-# from pyspark.sql.functions import col
-# df2 = df1.filter(col('model_year').__gt__(2000))
-# df2.show()
+df1 = carDf.select('product_name','quantity_sold','model_year')
+from pyspark.sql.functions import col
+df2 = df1.filter(col('model_year').__gt__(2000))
+df2.show()
 
 
 #----------------------

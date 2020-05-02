@@ -40,14 +40,15 @@ ss.sparkContext.setLogLevel("ERROR")
 ##     - createOrReplaceTempView: Lifetime is tied to Spark Application that creates the view.
 ##     - createTempView: Same as "createOrReplaceTempView".
 #-----------------------------------------------------------------------------------------------
-car_file='/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
-carDf = ss.read.format('json').option('inferSchema','true').load(car_file)
-carDf.show()
-# carTable = carDf.createOrReplaceTempView("car_table")
+# car_file='/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
+# carDf = ss.read.format('json').option('inferSchema','true').load(car_file)
+# carDf.createOrReplaceTempView("car_table")
 
 from pyspark.sql.functions import col
 # carSql = ss.sql("select product_name, quantity_sold from car_table where quantity_sold > 100000 order by quantity_sold desc")
+# ss.sql("select product_name, quantity_sold from car_table where quantity_sold > 100000 order by quantity_sold desc").show()
 # carSql.write.mode('append').saveAsTable("intellipaat.car_table")
+# carDf.write.mode('append').saveAsTable("intellipaat.car_table")
 
 # carDf.select('product_name', 'quantity_sold').filter(col('quantity_sold') > 100000).orderBy(col('quantity_sold').desc()).show()
 
