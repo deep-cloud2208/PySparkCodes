@@ -4,9 +4,10 @@ from pyspark import SparkContext, SparkConf
 conf = SparkConf()
 sc = SparkContext(conf=conf)
 # ss = SparkSession.builder.config('spark.sql.shuffle.partitions','4').getOrCreate()
-ss = SparkSession.builder.appName("PySpark_BatchPerf").getOrCreate()
+ss = SparkSession.builder.getOrCreate()
 
 '''
+Submit the application using spark-submit --master local PySpark_BatchPerf.py
 Monitoring on Local Mode: http://localhost:4040
 '''
 #-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -71,44 +72,80 @@ car_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/P
 
 # No. of rows read from the file = 14986
 carDf = ss.read.format('json').option('inferSchema','true').load(car_file)
-# carDf.show()
 
-from pyspark.sql.functions import col, regexp_replace, sum
-from datetime import datetime
-from pyspark.sql.types import DecimalType
+#----------------------
+# Demo 1 - Spark UI
+#----------------------
+# df1 = carDf.select('product_name','quantity_sold','model_year')
+# from pyspark.sql.functions import col
+# df2 = df1.filter(col('model_year').__gt__(2000))
+# df2.show()
 
-# print("start time: ",datetime.now().time().strftime('%H:%M:%S:'))
-start_time = datetime.now()
 
-# No. of rows, after FILTER = 5049
-df1 = carDf.filter(col('quantity_sold').__gt__(100000)).repartition(4)
+#----------------------
+# Demo 2 - Spark UI
+#----------------------
+# from pyspark.sql.functions import sum
+# df1 = carDf.select('product_name','quantity_sold','model_year')
+# df2 = df1.groupBy('product_name','model_year').agg(sum('quantity_sold').alias('tot_quantity_sold'))
+# df2.show()
 
-# No. of rows, after SELECT = 5049
-# df0 = df1.withColumn('new_price',regexp_replace(df0.price,"\$",""))
-df2 = df1.select('Car_VIN','credit_card_type',regexp_replace(col('price'),"\$","").alias('price'),'product_make','product_name','quantity_sold','state_sold_in')
 
-# No. of rows after GROUPBY = 4844
-df3 = df2.groupBy('product_make','product_name','credit_card_type','state_sold_in').agg(sum('quantity_sold').alias('tot_quantity_sold'),sum('price').alias('tot_price'))
+#----------------------
+# Demo 3 - Spark UI
+#----------------------
+# emp_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/emp_data_ORIG.csv'
+# dept_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/dept_data.csv'
+#
+# empDf = ss.read.format('csv').option('header','true').load(emp_file)
+# deptDf = ss.read.format('csv').option('header','true').load(dept_file)
+# joinDf = empDf.join(deptDf, ['dept_id'], 'inner')
+# # joinDf.explain()
+# joinDf.show()
 
-# No. of rows after GROUPBY = 611
-df4 = df3.groupBy('credit_card_type','state_sold_in').agg(sum('tot_quantity_sold').alias('tot_quantity_sold_st'),sum('tot_price').cast(DecimalType(20,2)).alias('tot_price_st'))
 
-# No. of rows after GROUPBY = 16
-df5 = df4.groupBy('credit_card_type').agg(sum('tot_quantity_sold_st').alias('tot_quantity_sold_cc'),sum('tot_price_st').alias('tot_price_cc'))
+#----------------------
+# Demo 4 - Spark UI
+#----------------------
+# from pyspark.sql.functions import col, regexp_replace, sum
+# from datetime import datetime
+# from pyspark.sql.types import DecimalType
+#
+# # print("start time: ",datetime.now().time().strftime('%H:%M:%S:'))df5.show()
+# start_time = datetime.now()
+#
+# # No. of rows, after FILTER = 5049
+# df1 = carDf.filter(col('quantity_sold').__gt__(100000)).repartition(4)
+#
+# # No. of rows, after SELECT = 5049
+# # df0 = df1.withColumn('new_price',regexp_replace(df0.price,"\$",""))
+# df2 = df1.select('Car_VIN','credit_card_type',regexp_replace(col('price'),"\$","").alias('price'),'product_make','product_name','quantity_sold','state_sold_in')
+#
+# # No. of rows after GROUPBY = 4844
+# df3 = df2.groupBy('product_make','product_name','credit_card_type','state_sold_in').agg(sum('quantity_sold').alias('tot_quantity_sold'),sum('price').alias('tot_price'))
+#
+# # No. of rows after GROUPBY = 611
+# df4 = df3.groupBy('credit_card_type','state_sold_in').agg(sum('tot_quantity_sold').alias('tot_quantity_sold_st'),sum('tot_price').cast(DecimalType(20,2)).alias('tot_price_st'))
+#
+# # No. of rows after GROUPBY = 16
+# df5 = df4.groupBy('credit_card_type').agg(sum('tot_quantity_sold_st').alias('tot_quantity_sold_cc'),sum('tot_price_st').alias('tot_price_cc'))
+#
+# # No. of rows after GROUPBY = 51
+# df6 = df4.groupBy('state_sold_in').agg(sum('tot_quantity_sold_st').alias('tot_quantity_sold_statewise'),sum('tot_price_st').alias('tot_price_statewise'))
+#
+# # df5.explain(True)
+# # df5.show()
+# # df6.show()
+#
+# end_time = datetime.now()
+# print("total time taken: ",end_time - start_time)
 
-# No. of rows after GROUPBY = 51
-df6 = df4.groupBy('state_sold_in').agg(sum('tot_quantity_sold_st').alias('tot_quantity_sold_statewise'),sum('tot_price_st').alias('tot_price_statewise'))
+## With RDD
 
-# df5.explain(True)
-df5.show()
-# df6.show()
+# bank_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
+# bankRdd = sc.textFile(bank_file,4)
 
-end_time = datetime.now()
-print("total time taken: ",end_time - start_time)
-
-# Execute this program using spark-submit as below
-# spark-submit --master local <full/path/of/PySpark_BatchPerf.py>
-
+# rdd1 = bankRdd.map(lambda x: )
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 '''
 IMPORTANT NOTE: SPARK HISTORY SERVER
@@ -121,5 +158,9 @@ Step-1 > Enable the following properties in configuration file:
         - spark.history.fs.logDirectory=<some-directory>
 Step-2 > Go to $SPARK_HOME/sbin and execute "start-history-server.sh"
 Step-3 > Access history server at http://localhost:18080
+
+History server stdout|stderr logs are stored at - 
+$SPARK_HOME/logs/spark-<user-name>-org.apache.spark.deploy.history.HistoryServer-1-<host-name>.out.*
+
 '''
 #-------------------------------------------------------------------------------------------------------------------------------------------------
