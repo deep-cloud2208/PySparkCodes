@@ -1,12 +1,13 @@
 from pyspark.sql import SparkSession
 from pyspark import SparkContext, SparkConf
+import os
 
 # spark-submit
 
 conf = SparkConf()
 sc = SparkContext(conf=conf)
 # ss = SparkSession.builder.config('spark.sql.shuffle.partitions','4').getOrCreate()
-ss = SparkSession.builder.appName("Batch Job Deep").getOrCreate()
+ss = SparkSession.builder.getOrCreate()
 
 '''
 Submit the application using spark-submit --master local PySpark_BatchPerf.py
@@ -67,29 +68,41 @@ Usage: spark-submit run-example [options] example-class [example args]
                             This argument does not work with --principal / --keytab.
 
 '''
+#------------------------------------------------------------------------------------------------------------------------------------------------
+# Following setup has to be done to access file in S3
 #-------------------------------------------------------------------------------------------------------------------------------------------------
+# access_id = os.environ['AWS_ACCESS_KEY_ID']
+# access_key = os.environ['AWS_SECRET_ACCESS_KEY']
+# hadoop_conf = ss.sparkContext._jsc.hadoopConfiguration()
+# hadoop_conf.set("fs.s3a.access.key", access_id)
+# hadoop_conf.set("fs.s3a.secret.key", access_key)
+# car_file = 's3a://deep-spark-bucket-training/sampledata/car_sales_data.json'
 
-car_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
-
-# No. of rows read from the file = 14986
+# # No. of rows read from the file = 14986
+car_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_data.json'
 carDf = ss.read.format('json').option('inferSchema','true').load(car_file)
 
 #----------------------
 # Demo 1 - Spark UI
 #----------------------
-df1 = carDf.select('product_name','quantity_sold','model_year')
+from pyspark.sql.functions import sum
+df1 = carDf.select('product_name','quantity_sold','model_year').repartition(4)
 from pyspark.sql.functions import col
 df2 = df1.filter(col('model_year').__gt__(2000))
-df2.show()
+df3 = df2.groupBy('product_name','model_year').agg(sum('quantity_sold').alias('tot_quantity_sold'))
+df3.show()
 
-
-#----------------------
-# Demo 2 - Spark UI
-#----------------------
-# from pyspark.sql.functions import sum
-# df1 = carDf.select('product_name','quantity_sold','model_year')
-# df2 = df1.groupBy('product_name','model_year').agg(sum('quantity_sold').alias('tot_quantity_sold'))
-# df2.show()
+#-----------------------------
+# Demo 2 - Spark UI on EMR
+# #-----------------------------
+# if __name__ == "__main__":
+#     ss = SparkSession.builder.getOrCreate()
+#     car_file = 's3a://deep-spark-bucket-training/sampledata/car_sales_data.json'
+#     carDf = ss.read.format('json').option('inferSchema', 'true').load(car_file)
+#     from pyspark.sql.functions import sum
+#     df1 = carDf.select('product_name','quantity_sold','model_year')
+#     df2 = df1.groupBy('product_name','model_year').agg(sum('quantity_sold').alias('tot_quantity_sold'))
+#     df2.show()
 
 
 #----------------------
@@ -165,3 +178,11 @@ $SPARK_HOME/logs/spark-<user-name>-org.apache.spark.deploy.history.HistoryServer
 
 '''
 #-------------------------------------------------------------------------------------------------------------------------------------------------
+'''
+AWS EMR Related Notes:
+1. To use Spark Web UI 
+   - Setup SSH Tunnel to Master Node. Use the following command 
+     ssh -i <key-pair> -N -L 8000:<ec2-dns>:8088 hadoop@<ec2-dns>
+   - From browser http://localhost:8000
+   
+'''
