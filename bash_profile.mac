@@ -1,0 +1,34 @@
+
+# Setting PATH for Python 3.6
+# The original version is saved in .bash_profile.pysave
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+
+#---------------------------------------------------------------------------------------------------------------------------------
+# Setup SPARK, SCALA and SBT paths
+#---------------------------------------------------------------------------------------------------------------------------------
+export SPARK_HOME="/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Codes/SparkBinary/spark-2.4.5-bin-hadoop2.7"
+export SCALA_HOME="/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Codes/ScalaBinary/scala-2.11.12"
+export SBT_HOME="/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Codes/SbtBinary/sbt"
+#---------------------------------------------------------------------------------------------------------------------------------
+
+export GCP_SDK_BIN="/HDD_Soumyadeep/TECHNICAL/CLOUD/GCP/GCP_SDK/google-cloud-sdk/bin"
+PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
+export PATH=$PATH:$SPARK_HOME/bin:$GCP_SDK_BIN
+alias python=python3
+alias pip=pip3
+export PATH=/usr/local/mysql/bin:$PATH
+
+#---------------------------------------------------------------------------------------------------------------------------------
+# Following setup is for running Spark on this machine
+#---------------------------------------------------------------------------------------------------------------------------------
+export PATH=$SPARK_HOME/bin:$SPARK_HOME/sbin:$JAVA_HOME/bin:$SBT_HOME/bin:$SBT_HOME/lib:$SCALA_HOME/bin:$SCALA_HOME/lib:$SPARK_HOME/bin:$PATH
+export PYSPARK_PYTHON=python3.6
+#---------------------------------------------------------------------------------------------------------------------------------
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/soumyadeepdey/google-cloud-sdk/path.bash.inc' ]; then . '/Users/soumyadeepdey/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/soumyadeepdey/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/soumyadeepdey/google-cloud-sdk/completion.bash.inc'; fi
+export PS1="\H:\W $ "
