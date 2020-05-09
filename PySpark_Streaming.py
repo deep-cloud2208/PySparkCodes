@@ -4,9 +4,10 @@ from pyspark.streaming import StreamingContext
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType
 from pyspark.sql.functions import col, sum
 
-# conf = SparkConf().setMaster('local[4]').setAppName('Streaming')
-# sc = SparkContext(conf=conf)
-# ssc = StreamingContext(sc,120)
+conf = SparkConf().setMaster('local[4]').setAppName('Streaming')
+sc = SparkContext(conf=conf)
+ssc = StreamingContext(sc,60)
+
 
 #-----------------------------------------------------------------------------------------------------------------------
 '''
@@ -17,8 +18,24 @@ Sinks: Kafka, Files, BigQuery, Google Pub/Sub, Console sink (testing), Memory si
 Spark Streaming using DStreams (with Socket Streams > use nc -lk 8000)
 Available Tranformations: map(), flatMap(), filter(), repartition(), union(), count(), reduce(), countByValue(), 
                           reduceByKey(), join()
-Output Operations: pprint(), saveAsTextFiles(), saveAsObjectFiles() 
+Output Operations: pprint(), saveAsTextFiles(), saveAsObjectFiles()
+'''
+#-----------------------------------------------------------------------------------------------------------------------
+# Socket Source - Using DStreams
+#-----------------------------------------------------------------------------------------------------------------------
+# socketStreaming = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_data.csv')
+socketStreaming = ssc.socketTextStream("localhost",20000)
+carRdd1 = socketStreaming.map(lambda x: (x.split(",")[3], x.split(",")[5], x.split(",")[8]))
+carRdd2 = carRdd1.map(lambda x: ((x[0],x[2]),x))        # Streaming RDD/DStreams do not support keyBy
+carRdd3 = carRdd2.map(lambda x: (x[0],int(x[1][1])))
+carRdd4 = carRdd3.reduceByKey(lambda x,y: x+y)
+carRdd4.pprint()
 
+ssc.start()
+ssc.awaitTermination()
+
+#-----------------------------------------------------------------------------------------------------------------------
+'''
 Spark Structured Streaming
 --------------------------
 Source ->   
@@ -95,21 +112,6 @@ Streaming DataFrames can be registered as temporary view and then SQL can be app
 #                         .start()
 #
 # writeStream.awaitTermination()
-
-
-#-----------------------------------------------------------------------------------------------------------------------
-# Socket Source
-#-----------------------------------------------------------------------------------------------------------------------
-# socketStreaming = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_data.csv')
-# socketStreaming = ssc.socketTextStream("localhost",18000)
-# carRdd1 = socketStreaming.map(lambda x: (x.split(",")[3], x.split(",")[5], x.split(",")[8]))
-# carRdd2 = carRdd1.map(lambda x: ((x[0],x[2]),x))        # Streaming RDD/DStreams do not support keyBy
-# carRdd3 = carRdd2.map(lambda x: (x[0],int(x[1][1])))
-# carRdd4 = carRdd3.reduceByKey(lambda x,y: x+y)
-# carRdd4.pprint()
-#
-# ssc.start()
-# ssc.awaitTermination()
 
 
 #-----------------------------------------------------------------------------------------------------------------------

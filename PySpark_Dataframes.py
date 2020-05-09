@@ -458,9 +458,9 @@ from pyspark.sql.functions import lit, to_date, to_timestamp, min
 
 
 # using car sales dataset
-# car_sales_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
-# carDf = ss.read.format('json').option('inferSchema','true').load(car_sales_file)
-# carDf.printSchema()
+car_sales_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_information.json'
+carDf = ss.read.format('json').option('inferSchema','true').load(car_sales_file)
+carDf.printSchema()
 
 #?? QNS 1 >>> Which product was sold the most by Quantity - find top 5
 # --------------------------------------------------------------------
