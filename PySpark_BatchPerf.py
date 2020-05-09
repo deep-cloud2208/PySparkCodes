@@ -85,12 +85,12 @@ carDf = ss.read.format('json').option('inferSchema','true').load(car_file)
 #----------------------
 # Demo 1 - Spark UI
 #----------------------
-from pyspark.sql.functions import sum
-df1 = carDf.select('product_name','quantity_sold','model_year').repartition(4)
-from pyspark.sql.functions import col
-df2 = df1.filter(col('model_year').__gt__(2000))
-df3 = df2.groupBy('product_name','model_year').agg(sum('quantity_sold').alias('tot_quantity_sold'))
-df3.show()
+# from pyspark.sql.functions import sum
+# df1 = carDf.select('product_name','quantity_sold','model_year').repartition(4)
+# from pyspark.sql.functions import col
+# df2 = df1.filter(col('model_year').__gt__(2000))
+# df3 = df2.groupBy('product_name','model_year').agg(sum('quantity_sold').alias('tot_quantity_sold'))
+# df3.show()
 
 #-----------------------------
 # Demo 2 - Spark UI on EMR
@@ -118,48 +118,36 @@ df3.show()
 # joinDf.show()
 
 
-#----------------------
-# Demo 4 - Spark UI
-#----------------------
+#-----------------------------------------------------------------------------------------------------------------------
+# Demo 4 - Cache and Persist
+# cache() always stores in MEMORY
+# persist(storageLevel=<StorageLevel>) can be used to store both in memory and disk
+# Storage Level = MEMORY_ONLY | DISK_ONLY | MEMORY_AND_DISK | MEMORY_ONLY_2 | MEMORY_AND_DISK_2
+#                 MEMORY_ONLY_SER (Java & Scala) | MEMORY_AND_DISK_SER (Java & Scala)
+#-----------------------------------------------------------------------------------------------------------------------
 # from pyspark.sql.functions import col, regexp_replace, sum
 # from datetime import datetime
 # from pyspark.sql.types import DecimalType
 #
-# # print("start time: ",datetime.now().time().strftime('%H:%M:%S:'))df5.show()
+#
 # start_time = datetime.now()
 #
-# # No. of rows, after FILTER = 5049
 # df1 = carDf.filter(col('quantity_sold').__gt__(100000)).repartition(4)
-#
-# # No. of rows, after SELECT = 5049
-# # df0 = df1.withColumn('new_price',regexp_replace(df0.price,"\$",""))
 # df2 = df1.select('Car_VIN','credit_card_type',regexp_replace(col('price'),"\$","").alias('price'),'product_make','product_name','quantity_sold','state_sold_in')
-#
-# # No. of rows after GROUPBY = 4844
 # df3 = df2.groupBy('product_make','product_name','credit_card_type','state_sold_in').agg(sum('quantity_sold').alias('tot_quantity_sold'),sum('price').alias('tot_price'))
-#
-# # No. of rows after GROUPBY = 611
-# df4 = df3.groupBy('credit_card_type','state_sold_in').agg(sum('tot_quantity_sold').alias('tot_quantity_sold_st'),sum('tot_price').cast(DecimalType(20,2)).alias('tot_price_st'))
-#
-# # No. of rows after GROUPBY = 16
-# df5 = df4.groupBy('credit_card_type').agg(sum('tot_quantity_sold_st').alias('tot_quantity_sold_cc'),sum('tot_price_st').alias('tot_price_cc'))
-#
-# # No. of rows after GROUPBY = 51
-# df6 = df4.groupBy('state_sold_in').agg(sum('tot_quantity_sold_st').alias('tot_quantity_sold_statewise'),sum('tot_price_st').alias('tot_price_statewise'))
-#
-# # df5.explain(True)
-# # df5.show()
-# # df6.show()
-#
+# # df4 = df3.groupBy('credit_card_type','state_sold_in').agg(sum('tot_quantity_sold').alias('tot_quantity_sold_st'),sum('tot_price').cast(DecimalType(20,2)).alias('tot_price_st'))
+# df4 = df3.groupBy('credit_card_type','state_sold_in').agg(sum('tot_quantity_sold').alias('tot_quantity_sold_st'),sum('tot_price').cast(DecimalType(20,2)).alias('tot_price_st')).cache()
+# df5 = df4.groupBy('credit_card_type').agg(sum('tot_quantity_sold_st').alias('tot_quantity_sold_cc'))
+# df6 = df4.groupBy('credit_card_type').agg(sum('tot_price_st').alias('tot_price'))
+# df7 = df6.join(df5, ['credit_card_type'], 'inner')
+# df7.show()
+# # df7.explain()
+# #
+# # # df5.explain(True)
+# #
 # end_time = datetime.now()
 # print("total time taken: ",end_time - start_time)
 
-## With RDD
-
-# bank_file = '/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/JPMC_Bank_Database.csv'
-# bankRdd = sc.textFile(bank_file,4)
-
-# rdd1 = bankRdd.map(lambda x: )
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 '''
 IMPORTANT NOTE: SPARK HISTORY SERVER

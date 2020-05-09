@@ -87,11 +87,11 @@ Streaming DataFrames can be registered as temporary view and then SQL can be app
 # df2 = df1.filter(col('model_year').cast(IntegerType()).__ge__(2000) & col('model_year').cast(IntegerType()).__le__(2010))
 # df3 = df2.groupBy("product_name","model_year","country_sold_in").agg(sum("quantity_sold").alias("tot_qty_sold"))
 #
-# df3.createOrReplaceTempView("streaming_car_table")
+# # df3.createOrReplaceTempView("streaming_car_table")
 # writeStream = df3.writeStream\
 #                         .format("console")\
 #                         .outputMode("update")\
-#                         .trigger(processingTime='15 seconds')\
+#                         .trigger(processingTime='10 seconds')\
 #                         .start()
 #
 # writeStream.awaitTermination()
