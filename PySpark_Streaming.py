@@ -4,9 +4,9 @@ from pyspark.streaming import StreamingContext
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType
 from pyspark.sql.functions import col, sum
 
-conf = SparkConf().setMaster('local[4]').setAppName('Streaming')
-sc = SparkContext(conf=conf)
-ssc = StreamingContext(sc,60)
+# conf = SparkConf().setMaster('local[4]').setAppName('Streaming')
+# sc = SparkContext(conf=conf)
+# ssc = StreamingContext(sc,60)
 
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -24,15 +24,15 @@ Output Operations: pprint(), saveAsTextFiles(), saveAsObjectFiles()
 # Socket Source - Using DStreams
 #-----------------------------------------------------------------------------------------------------------------------
 # socketStreaming = sc.textFile('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/car_sales_data.csv')
-socketStreaming = ssc.socketTextStream("localhost",20000)
-carRdd1 = socketStreaming.map(lambda x: (x.split(",")[3], x.split(",")[5], x.split(",")[8]))
-carRdd2 = carRdd1.map(lambda x: ((x[0],x[2]),x))        # Streaming RDD/DStreams do not support keyBy
-carRdd3 = carRdd2.map(lambda x: (x[0],int(x[1][1])))
-carRdd4 = carRdd3.reduceByKey(lambda x,y: x+y)
-carRdd4.pprint()
-
-ssc.start()
-ssc.awaitTermination()
+# socketStreaming = ssc.socketTextStream("localhost",20000)
+# carRdd1 = socketStreaming.map(lambda x: (x.split(",")[3], x.split(",")[5], x.split(",")[8]))
+# carRdd2 = carRdd1.map(lambda x: ((x[0],x[2]),x))        # Streaming RDD/DStreams do not support keyBy
+# carRdd3 = carRdd2.map(lambda x: (x[0],int(x[1][1])))
+# carRdd4 = carRdd3.reduceByKey(lambda x,y: x+y)
+# carRdd4.pprint()
+#
+# ssc.start()
+# ssc.awaitTermination()
 
 #-----------------------------------------------------------------------------------------------------------------------
 '''
@@ -46,19 +46,19 @@ Source ->
 - AWS Kinesis, RedShift 
 - Google Pub/Sub, BigQuery
 
-Sink->      
+Sink/Target ->      
 - File sink (Append) 
 - Kafka sink (Append, Update, Complete) 
 - Console sink (Append, Update, Complete) 
-- Memory Sink (Append, Complete)
+- Memory Sink (Append, Comp.lete)
 - Foreach | ForeachBatch sink (Append, Update, Complete)
 - BigQuery (GCP)
 - RedShift (AWS)        
 
 Output Modes: 
-Complete | Append | Update
+Complete (Overwrite) | Append | Update
 
-All Structured API transformationa and operations are supported EXCEPT for the following:
+All Structured API transformations and operations are supported EXCEPT for the following:
 - Chain of aggregrations on a streaming DataFrame
 - Limit and Take
 - Distinct
@@ -105,41 +105,45 @@ Streaming DataFrames can be registered as temporary view and then SQL can be app
 # df3 = df2.groupBy("product_name","model_year","country_sold_in").agg(sum("quantity_sold").alias("tot_qty_sold"))
 #
 # # df3.createOrReplaceTempView("streaming_car_table")
-# writeStream = df3.writeStream\
-#                         .format("console")\
-#                         .outputMode("update")\
-#                         .trigger(processingTime='10 seconds')\
-#                         .start()
+# df4 = df3.writeStream.format("console")\
+#                      .outputMode("complete")\
+#                      .trigger(processingTime='90 seconds')\
+#                      .start()
 #
-# writeStream.awaitTermination()
+# df4.awaitTermination()
 
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Tumbling Window and Sliding Window based on Event Time
 #-----------------------------------------------------------------------------------------------------------------------
-# from pyspark.sql.functions import to_timestamp, to_date, date_format, col, window
-#
+from pyspark.sql.functions import to_timestamp, to_date, date_format, col, window
+
 # spark = SparkSession.builder.appName("Streaming").config("spark.sql.streaming.schemaInference", "true").getOrCreate()
-# # spark = SparkSession.builder.appName("Streaming").getOrCreate()
-# # fileStreaming = spark.read.format('json').option('inferSchema', 'true').load('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/streaming-stock-data-json/stock-data-1.json')
+# spark = SparkSession.builder.appName("Streaming").getOrCreate()
+# fileStreaming = spark.read.format('json').option('inferSchema', 'true').load('/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/streaming-stock-data-json/stock-data-1.json')
 # fileStreaming = spark.readStream.format("json"). \
 #                                  option("inferSchema", "true"). \
 #                                  option("maxFilesPerTrigger", 1). \
 #                                  load("/Users/soumyadeepdey/HDD_Soumyadeep/TECHNICAL/Training/Intellipaat/PySparkCodes/sampledata/streaming-stock-data-json/")
-#
-#
+
+# If we do not get event time from data source, we have to add server processing time as event time as shown below:
+# from datetime import datetime
+# df0 = fileStreaming.withColumn("event_time",datetime.now())
+
 # df1 = fileStreaming.select("ticker","stock_value", "stock_market_cap", "units_sold", "units_bought",to_timestamp(col("event_time"),"HH:mm:ss").alias("event_time"))
 # df2 = df1.select('ticker','stock_value','stock_market_cap','units_sold','units_bought', date_format('event_time','hh:mm:ss').alias('event_time'))
-#
-# #------------------
-# # Tumbling Window
-# #------------------
-# # df3 = df2.groupBy(window(col('event_time'),"2 minutes"),'ticker').agg(sum('units_bought').alias('units_bought'), sum('units_sold').alias('units_sold'))
-#
+
+#----------------------------------------------------------------------------------------------------------
+# Tumbling Window
+# window - contains the column based on which you seek aggregation and the trigger duration on event time
+#----------------------------------------------------------------------------------------------------------
+# df3 = df2.groupBy(window(col('event_time'),"2 minutes"),'ticker').agg(sum('units_bought').alias('units_bought'), sum('units_sold').alias('units_sold'))
+# df4 = df3.writeStream.format("console").outputMode("append").start()
+# df4.awaitTermination()
 # # ------------------------------------------------------------------------------
 # # Sliding Window - Trigger window should always be smaller than Sliding window
-# #------------------------------------------------------------------------------
-# # df3 = df2.groupBy(window(col('event_time'),"10 minutes", "2 minutes"),'ticker').agg(sum('units_bought').alias('units_bought'), sum('units_sold').alias('units_sold'))
+# #-------------------------------------------------------------------------------
+# df3 = df2.withWatermark("event_time","15 minutes").groupBy(window(col('event_time'), "10 minutes", "2 minutes"),'ticker').agg(sum('units_bought').alias('units_bought'), sum('units_sold').alias('units_sold'))
 #
 # df3 = df2.groupBy('ticker').agg(sum('units_bought').alias('units_bought'), sum('units_sold').alias('units_sold'))
 #
